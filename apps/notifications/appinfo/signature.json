@@ -1,0 +1,27 @@
+{
+    "hashes": {
+        "COPYING": "6e90d46be391aa645bcf4dfaa67f452cb15a73749f1895633789c7763b43cc0b65d391e5e95652c9a9a2063c956e0e8099a4e1ce4b70b0636629f9eac39c1080",
+        "appinfo\/app.php": "cdfaeb9f7c6d2602f08bfb00a39bd09ed4aa64a4a27cde7555e529cfa68c65177042d017150d3609ca96de028b0ff1f42506b0e08b42dc76e6ab75ed5de5f972",
+        "appinfo\/application.php": "89a5fe8af2a54e02d92ca61adc14a99189cb0a6b7690b8779231c1696c265c694b9a0c19e04f308c65eee739b156682b532688522a5547c1765e9e89fb122169",
+        "appinfo\/database.xml": "bebfc3e1ac4679f6c12f9ed6d5aa827e4f1404aa5ed0ea466dcbf7bc2e5771f26deb4c480bc12ab75137374aca9e8c9dff1da193ebff51b47caee3366d761890",
+        "appinfo\/info.xml": "d0847e16dea7c25fcdaa375bd65e074c83f8e3c78ec5bb91a974ca7df2acd85bafb34037a7a9e0e16a2a46280534b1f0cc6f3731126a99a6e613b21d61e2d369",
+        "appinfo\/routes.php": "43e93bba0dade459cb349d305b71beb9eff35286b9a45a2d266d817831cffbb32de4ad38c9d6ed4920b9f3995d1053ab9ab676c60bc5252f9b3105d63c1e1068",
+        "controller\/endpointcontroller.php": "9216c8ef17f1a2c07c809946da8f4fdfffb275f8319e40819dffff613ee998d2dd767abe088573ccc2bf2e45d719f10bec33330edfa63a221e474f253541cf08",
+        "css\/styles.css": "7d1fd7dc7726b8a86d37d1c7a311bda60f95674177b9da7e26249b98f8b241f567ec225417baddef61b6f6cf259da066e20fbd2ea473832b30388557c60d6293",
+        "docs\/notification-workflow.md": "685b6a899534fd316d699e1febc35740ea09d317b809228fe34350b5e4322d4dd137857ea4b9a68e9ad537d38dc69570e950d6ac22ad9649d17f86d07062bca2",
+        "docs\/ocs-endpoint-v1.md": "904ed62f0f6d01a278a347fb1f2db2d79ca2a31d8f924fdc17dffb6c01c38ea5664b14d4807302f66dcbe31619bf94fdda778dd5b03da794612291cf269a86b5",
+        "img\/notifications-new.png": "5d7d26156ee1d777c91f4a8c79a99e4a4400a2684a5fa0bb88a29de3e0cf4159999558ba6a1a80d13462e4d348bcb245f65e577b626d0f7b4e97a2a13cae2e22",
+        "img\/notifications-new.svg": "29da2eeebe6d9c1400174d545b96937ab48ccd6e53299c9ef1fe03dbf62002b303af7cfe0d8c350b119bb3502960ea6fc0faf9bdeedea0b6e8d86efa49aec761",
+        "img\/notifications.png": "f427524eeb4c4a03075cea5304f0e18fc21f67a422ddbbf44f533cccd850587e845459762b18f68c394f952ea16c76c0732d99c9777a8eb53c3c01c1a7ddfd24",
+        "img\/notifications.svg": "8e1e8f6cb70e6a66966d2d57d64a1f721f2ccd780216bfe65c3c6a3f9ca81990f02b0839b410fc8f3d5474dac94a1dd2d19828b433c420c3c94a7fa0999dd820",
+        "img\/sample-empty.png": "8972c27d0ccefd80a2a8242aadfedc12811533d1d8cff9cfc9ba1b1e52af5a6596127f3ed36e3042452567d522b0e5ffaa9ce7cf76e6f7f75f618fc31b368257",
+        "img\/sample-new.png": "978dae803140f9b4aafa5faed18bf47e4ef8946da4b3ae9917a0da4f01938ce0a23fe80543d821ab5b09c042a090a9423c82d1c11e1121dc7220fda8b9997404",
+        "js\/app.js": "ff7cd591125be2c74816db4be69502b378f7bdc09818e5729ba5db379accc9dd926a2d9fc03ab40864c6a5e650618fc53f8ac0922f84de08236f6e1d96a1b229",
+        "js\/notification.js": "36e5eae8e9efbc2c73cd11639d2bac88924e795e5504841d7b384f14c79c2ffa45ac10cd80e769e791a8afc15494405adb8fa0d87d2cdae579ce09d494fa94e2",
+        "lib\/app.php": "a44d411f6fada118bbd57ca6202b7cc7ca9435c31fa0cfb8b6fade91b4e05833d144ddb9a0eb56351ad59c68f7d76b9f5155fded3c79b51173ddef8d2955a21d",
+        "lib\/capabilities.php": "812758eed83ccb59b6543eaf6782d3c900ea4ac388868df88682b89a2a93c226eb067f831b75ed095064e38a2d50d2b52aa11b35c0ed955b6432fe7c9b593cf6",
+        "lib\/handler.php": "27425b8ba16de4533a7ced7a7de8534c9f4a4d037ae9146b8141bea3cb93961fbaac9229d192664ac26b721377f37ba365f6eb3da7a30600f078856468d3861f"
+    },
+    "signature": "ga8DLXC3v01Nj\/L5KwyiL5bdS8mXf0olpBaijO068Dbe2zN8IY7DgF3JKsihFEiTZVGj1FNorM+uPQtFy8ydc+mBeJazUa+paGYz0TPz5vU67CrYSXjNjLH65BMO7LQW79witcplVQ+SofH91SGuR3YSONXcns2aZhTPnCwGEWpeKFijCznYBslWHtUziSW\/OedfzMWYqf+tENjsYIUrRY1yg7sMKTAEr+RXU3bilbwP6RKmhof1I1p1JxVXVuRICYzOee9hCAurgA0NDkMqoHHlqnxPzRqWSNLHb2bJwVqHiM+WKF1YYwO\/cK3QyZd35gQZs963T8pVhG7fdXtXyQ==",
+    "certificate": "-----BEGIN CERTIFICATE-----\r\nMIID8TCCAdkCAhAAMA0GCSqGSIb3DQEBCwUAMG0xCzAJBgNVBAYTAlVTMQ8wDQYD\r\nVQQIDAZCb3N0b24xFjAUBgNVBAoMDW93bkNsb3VkIEluYy4xNTAzBgNVBAMMLG93\r\nbkNsb3VkIENvZGUgU2lnbmluZyBJbnRlcm1lZGlhdGUgQXV0aG9yaXR5MB4XDTE2\r\nMDIwMzE3NTE0OVoXDTI2MDEzMTE3NTE0OVowDzENMAsGA1UEAwwEY29yZTCCASIw\r\nDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAPHdSljnHI+ueQd27UyWPO9n4Lqt\r\nbK0kdekiC3si7Mee7uXXJaGuqXJozHEZYB1LIFLdCU\/itCxEk9hyLcyNzeT+nRT\/\r\nzDuOYdbLgCj7\/A5bX+u3jc29UlCYybSFchfMdvn7a0njCna4dE+73b4yEj16tS2h\r\nS1EUygSzgicWlJqMD3Z9Qc+zLEpdhq9oDdDB8HURi2NW4KzIraVncSH+zF1QduOh\r\nnERDnF8x48D3FLdTxGA0W\/Kg4gYsq4NRvU6g3DJNdp4YfqRSFMmLFDCgzDuhan7D\r\nwgRlI9NAeHbnyoUPtrDBUceI7shIbC\/i87xk9ptqV0AyFonkJtK6lWwZjNkCAwEA\r\nATANBgkqhkiG9w0BAQsFAAOCAgEAAMgymqZE1YaHYlRGwvTE7gGDY3gmFOMaxQL4\r\nE5m0CnkBz4BdIPRsQFFdOv3l\/MIWkw5ED3vUB925VpQZYFSiEuv5NbnlPaHZlIMI\r\nn8AV\/sTP5jue3LhtAN4EM63xNBhudAT6wVsvGwOuQOx9Xv+ptO8Po7sTuNYP0CMH\r\nEOQN+\/q8tYlSm2VW+dAlaJ+zVZwZldhVjL+lSH4E9ktWn3PmgNQeKfcnJISUbus6\r\nZtsYDF\/X96\/Z2ZQvMXOKksgvU6XlvIxllcyebC9Bxe\/h0D63GCO2tqN5CWQzIIqn\r\napUynPX8BlLaaExqYGERwlUi\/yOGaUVPUjEPVehviOQYgAqxlrkJk1dWeCrwUori\r\nCXpi+IUYkidfgiJ9F88M3ElpwqIaXp7G3\/4oHBuE2u6M+L+1\/vqPJeTCAWUxxpJE\r\nyYmM+db6D4TySFpQPENNzPS8bpR6T8w2hRumkldC42HrnyJJbpjOieTXhXzjdPvZ\r\nIEP9JGtkhB2du6nBF2MNAq2TqRXpcfQrQEbnQ13aV9bl+roTwwO+SOWK\/wgvdOMI\r\nSTQ0Xk0sTGlmQjPYPkibVceaWMR3sX4cNt5c33YhJys5jxHoAh42km4nN9tfykR5\r\ncrl5lBlKjXh2GP0+omSO3x1jX4+iQPCW2TWoyKkUdLu\/hGHG2w8RrTeme+kATECH\r\nYSu356M=\r\n-----END CERTIFICATE-----"
+}

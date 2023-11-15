@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Using the occ Command &#8212; ownCloud 9.0 Server Administration Manual 9.0 documentation</title>
+    <link rel="stylesheet" href="../_static/" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/main.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/styles.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '9.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Configuring the Activity App" href="activity_configuration.html" />
+    <link rel="prev" title="Importing System-wide and Personal SSL Certificates" href="import_ssl_cert.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1d2d44">
+
+  </head>
+  <body>
+
+
+<div class="wrap container not-front">
+  <div class="content row">
+  <main class="main">
+    <div class="row page-content-header">
+      <div class="col-md-5 col-md-offset-7">
+      
+        <form class="headersearch" style="margin-bottom:-3px;" action="../search.html" method="get">
+        <input type="text" value="" name="q" id="q" class="form-control" /> 
+        <button  class="btn btn-default" type="submit" id="searchsubmit">Search</button>
+        </form>
+      
+      </div>
+    </div>
+    
+			<div class="row">
+				<div class="col-md-3">
+					<div class="sidebar">
+							<div class="menu-support-container">
+								<ul id="menu-support" class="menu">
+									<ul>
+										
+<li><a href="../contents.html">Table of Contents</a></li>
+									</ul>
+                  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">ownCloud 9.0 Server Administration Manual Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">ownCloud 9.0 Release Notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../whats_new_admin.html">What’s New for Admins in ownCloud 9.0</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation/index.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ownCloud Server Configuration</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="security_setup_warnings.html">Warnings on Admin Page</a></li>
+<li class="toctree-l2"><a class="reference internal" href="import_ssl_cert.html">Importing System-wide and Personal SSL Certificates</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Using the occ Command</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#occ-command-directory">occ Command Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-occ-as-your-http-user">Run occ As Your HTTP User</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#apps-commands">Apps Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#background-jobs-selector">Background Jobs Selector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#config-commands">Config Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dav-commands">Dav Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database-conversion">Database Conversion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#encryption">Encryption</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#federation-sync">Federation Sync</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#file-operations">File Operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#files-external">Files External</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integrity-check">Integrity Check</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#l10n-create-javascript-translation-files-for-apps">l10n, Create Javascript Translation Files for Apps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ldap-commands">LDAP Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logging-commands">Logging Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maintenance-commands">Maintenance Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#security-import-ssl-certificates">Security (Import SSL Certificates)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#shibboleth-modes-enterprise-edition-only">Shibboleth Modes (Enterprise Edition only)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trashbin">Trashbin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-commands">User Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#versions">Versions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-installation">Command Line Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-upgrade">Command Line Upgrade</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="activity_configuration.html">Configuring the Activity App</a></li>
+<li class="toctree-l2"><a class="reference internal" href="antivirus_configuration.html">Configuring the ClamAV Antivirus Scanner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="caching_configuration.html">Configuring Memory Caching</a></li>
+<li class="toctree-l2"><a class="reference internal" href="background_jobs_configuration.html">Background Jobs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config_sample_php_parameters.html">Config.php Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="email_configuration.html">Email Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="external_sites.html">Linking External Sites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_client_repos.html">Custom Client Download Repositories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="knowledgebase_configuration.html">Knowledge Base Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="language_configuration.html">Language Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging_configuration.html">Logging Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="harden_server.html">Hardening and Security Guidance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reverse_proxy_configuration.html">Reverse Proxy Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thirdparty_php_configuration.html">Using Third Party PHP Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="js_css_asset_management_configuration.html">JavaScript and CSS Asset Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="automatic_configuration.html">Automatic Configuration Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oc_server_tuning.html">ownCloud Server Tuning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index_php_less_urls.html">Enable index.php-less URLs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration_user/index.html">User Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration_files/index.html">File Sharing and Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration_database/index.html">Database Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration_mimetypes/index.html">Mimetypes Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../maintenance/index.html">Maintenance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../issues/index.html">Issues and Troubleshooting</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../enterprise_installation/index.html">Enterprise Edition Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../enterprise_clients/index.html">Creating Branded ownCloud Clients (Enterprise only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../enterprise_server_branding/index.html">Enterprise Server Branding (Enterprise only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../enterprise_external_storage/index.html">External Storage (Enterprise only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../enterprise_user_management/index.html">User Management (Enterprise only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../enterprise_file_management/index.html">Enterprise File Management (Enterprise Only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../enterprise_logging/index.html">Enterprise Logging Apps (Enterprise only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../enterprise_firewall/index.html">Enterprise Firewall (Enterprise only)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../enterprise_troubleshooting.html">Enterprise Troubleshooting</a></li>
+</ul>
+
+								</ul>
+							</div>
+					</div>
+				</div>
+        
+
+				<div class="col-md-9">
+					<div class="page-content">
+            
+<ul class="prevnext-title list-unstyled list-inline">
+  <li class="prev">
+    <a href="import_ssl_cert.html" title="Previous Chapter: Importing System-wide and Personal SSL Certificates"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm">&laquo; Importing Sys...</span>
+    </a>
+  </li>
+  <li class="next">
+    <a href="activity_configuration.html" title="Next Chapter: Configuring the Activity App"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm">Configuring t... &raquo;</span>
+    </a>
+  </li>
+</ul>
+						
+  <div class="section" id="using-the-occ-command">
+<h1>Using the occ Command<a class="headerlink" href="#using-the-occ-command" title="Permalink to this headline">¶</a></h1>
+<p>ownCloud’s <code class="docutils literal"><span class="pre">occ</span></code> command (ownCloud console) is ownCloud’s command-line
+interface. You can perform many common server operations with <code class="docutils literal"><span class="pre">occ</span></code>, such as
+installing and upgrading ownCloud, manage users, encryption, passwords, LDAP
+setting, and more.</p>
+<p><code class="docutils literal"><span class="pre">occ</span></code> is in the <code class="file docutils literal"><span class="pre">owncloud/</span></code> directory; for example
+<code class="file docutils literal"><span class="pre">/var/www/owncloud</span></code> on Ubuntu Linux. <code class="docutils literal"><span class="pre">occ</span></code> is a PHP script. <strong>You must
+run it as your HTTP user</strong> to ensure that the correct permissions are maintained
+on your ownCloud files and directories. In ownCloud 8.2+ you may run it from
+any directory (specifying the filepath); in previous releases it had to be
+run from the <code class="file docutils literal"><span class="pre">owncloud/</span></code> directory.</p>
+<div class="section" id="occ-command-directory">
+<h2>occ Command Directory<a class="headerlink" href="#occ-command-directory" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="#http-user-label"><span class="std std-ref">Run occ As Your HTTP User</span></a></li>
+<li><a class="reference internal" href="#apps-commands-label"><span class="std std-ref">Apps Commands</span></a></li>
+<li><a class="reference internal" href="#background-jobs-selector-label"><span class="std std-ref">Background Jobs Selector</span></a></li>
+<li><a class="reference internal" href="#config-commands-label"><span class="std std-ref">Config Commands</span></a></li>
+<li><a class="reference internal" href="#dav-label"><span class="std std-ref">Dav Commands</span></a></li>
+<li><a class="reference internal" href="#database-conversion-label"><span class="std std-ref">Database Conversion</span></a></li>
+<li><a class="reference internal" href="#encryption-label"><span class="std std-ref">Encryption</span></a></li>
+<li><a class="reference internal" href="#federation-sync-label"><span class="std std-ref">Federation Sync</span></a></li>
+<li><a class="reference internal" href="#file-operations-label"><span class="std std-ref">File Operations</span></a></li>
+<li><a class="reference internal" href="#files-external-label"><span class="std std-ref">Files External</span></a></li>
+<li><a class="reference internal" href="#integrity-check-label"><span class="std std-ref">Integrity Check</span></a></li>
+<li><a class="reference internal" href="#create-javascript-translation-files-label"><span class="std std-ref">l10n, Create Javascript Translation Files for Apps</span></a></li>
+<li><a class="reference internal" href="#ldap-commands-label"><span class="std std-ref">LDAP Commands</span></a></li>
+<li><a class="reference internal" href="#logging-commands-label"><span class="std std-ref">Logging Commands</span></a></li>
+<li><a class="reference internal" href="#maintenance-commands-label"><span class="std std-ref">Maintenance Commands</span></a></li>
+<li><a class="reference internal" href="#security-commands-label"><span class="std std-ref">Security (Import SSL Certificates)</span></a></li>
+<li><a class="reference internal" href="#shibboleth-label"><span class="std std-ref">Shibboleth Modes (Enterprise Edition only)</span></a></li>
+<li><a class="reference internal" href="#trashbin-label"><span class="std std-ref">Trashbin</span></a></li>
+<li><a class="reference internal" href="#user-commands-label"><span class="std std-ref">User Commands</span></a></li>
+<li><a class="reference internal" href="#versions-label"><span class="std std-ref">Versions</span></a></li>
+<li><a class="reference internal" href="#command-line-installation-label"><span class="std std-ref">Command Line Installation</span></a></li>
+<li><a class="reference internal" href="#command-line-upgrade-label"><span class="std std-ref">Command Line Upgrade</span></a></li>
+</ul>
+</div>
+<div class="section" id="run-occ-as-your-http-user">
+<span id="http-user-label"></span><h2>Run occ As Your HTTP User<a class="headerlink" href="#run-occ-as-your-http-user" title="Permalink to this headline">¶</a></h2>
+<p>The HTTP user is different on the various Linux distributions. See
+<a class="reference internal" href="../installation/installation_wizard.html#strong-perms-label"><span class="std std-ref">Setting Strong Directory Permissions</span></a> to learn how to find your HTTP user.</p>
+<ul class="simple">
+<li>The HTTP user and group in Debian/Ubuntu is www-data.</li>
+<li>The HTTP user and group in Fedora/CentOS is apache.</li>
+<li>The HTTP user and group in Arch Linux is http.</li>
+<li>The HTTP user in openSUSE is wwwrun, and the HTTP group is www.</li>
+</ul>
+<p>If your HTTP server is configured to use a different PHP version than the
+default (/usr/bin/php), <code class="docutils literal"><span class="pre">occ</span></code> should be run with the same version. For
+example, in CentOS 6.5 with SCL-PHP54 installed, the command looks like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">apache</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">rh</span><span class="o">/</span><span class="n">php54</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">php</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">owncloud</span><span class="o">/</span><span class="n">occ</span>
+</pre></div>
+</div>
+<p>Running <code class="docutils literal"><span class="pre">occ</span></code> with no options lists all commands and options, like this
+example on Ubuntu:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span>
+<span class="n">ownCloud</span> <span class="n">version</span> <span class="mf">9.0</span><span class="o">.</span><span class="mi">0</span>
+
+<span class="n">Usage</span><span class="p">:</span>
+ <span class="n">command</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span> <span class="p">[</span><span class="n">arguments</span><span class="p">]</span>
+
+<span class="n">Options</span><span class="p">:</span>
+ <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">Display</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span>
+ <span class="o">-</span><span class="n">q</span><span class="p">,</span> <span class="o">--</span><span class="n">quiet</span>           <span class="n">Do</span> <span class="ow">not</span> <span class="n">output</span> <span class="nb">any</span> <span class="n">message</span>
+ <span class="o">-</span><span class="n">V</span><span class="p">,</span> <span class="o">--</span><span class="n">version</span>         <span class="n">Display</span> <span class="n">this</span> <span class="n">application</span> <span class="n">version</span>
+     <span class="o">--</span><span class="n">ansi</span>            <span class="n">Force</span> <span class="n">ANSI</span> <span class="n">output</span>
+     <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">ansi</span>         <span class="n">Disable</span> <span class="n">ANSI</span> <span class="n">output</span>
+ <span class="o">-</span><span class="n">n</span><span class="p">,</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">interaction</span>  <span class="n">Do</span> <span class="ow">not</span> <span class="n">ask</span> <span class="nb">any</span> <span class="n">interactive</span> <span class="n">question</span>
+     <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">warnings</span>     <span class="n">Skip</span> <span class="k">global</span> <span class="n">warnings</span><span class="p">,</span> <span class="n">show</span> <span class="n">command</span> <span class="n">output</span> <span class="n">only</span>
+ <span class="o">-</span><span class="n">v</span><span class="o">|</span><span class="n">vv</span><span class="o">|</span><span class="n">vvv</span><span class="p">,</span> <span class="o">--</span><span class="n">verbose</span>  <span class="n">Increase</span> <span class="n">the</span> <span class="n">verbosity</span> <span class="n">of</span> <span class="n">messages</span><span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">normal</span> <span class="n">output</span><span class="p">,</span>
+                       <span class="mi">2</span> <span class="k">for</span> <span class="n">more</span> <span class="n">verbose</span> <span class="n">output</span> <span class="ow">and</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">debug</span>
+
+<span class="n">Available</span> <span class="n">commands</span><span class="p">:</span>
+ <span class="n">check</span>                 <span class="n">check</span> <span class="n">dependencies</span> <span class="n">of</span> <span class="n">the</span> <span class="n">server</span>
+                       <span class="n">environment</span>
+ <span class="n">help</span>                  <span class="n">Displays</span> <span class="n">help</span> <span class="k">for</span> <span class="n">a</span> <span class="n">command</span>
+ <span class="nb">list</span>                  <span class="n">Lists</span> <span class="n">commands</span>
+ <span class="n">status</span>                <span class="n">show</span> <span class="n">some</span> <span class="n">status</span> <span class="n">information</span>
+ <span class="n">upgrade</span>               <span class="n">run</span> <span class="n">upgrade</span> <span class="n">routines</span> <span class="n">after</span> <span class="n">installation</span> <span class="n">of</span>
+                       <span class="n">a</span> <span class="n">new</span> <span class="n">release</span><span class="o">.</span> <span class="n">The</span> <span class="n">release</span> <span class="n">has</span> <span class="n">to</span> <span class="n">be</span>
+                       <span class="n">installed</span> <span class="n">before</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>This is the same as <code class="docutils literal"><span class="pre">sudo</span> <span class="pre">-u</span> <span class="pre">www-data</span> <span class="pre">php</span> <span class="pre">occ</span> <span class="pre">list</span></code>.</p>
+<p>Run it with the <code class="docutils literal"><span class="pre">-h</span></code> option for syntax help:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+<p>Display your ownCloud version:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="o">-</span><span class="n">V</span>
+  <span class="n">ownCloud</span> <span class="n">version</span> <span class="mf">9.0</span><span class="o">.</span><span class="mi">0</span>
+</pre></div>
+</div>
+<p>Query your ownCloud server status:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">status</span>
+  <span class="o">-</span> <span class="n">installed</span><span class="p">:</span> <span class="n">true</span>
+  <span class="o">-</span> <span class="n">version</span><span class="p">:</span> <span class="mf">9.0</span><span class="o">.</span><span class="mf">0.19</span>
+  <span class="o">-</span> <span class="n">versionstring</span><span class="p">:</span> <span class="mf">9.0</span><span class="o">.</span><span class="mi">0</span>
+  <span class="o">-</span> <span class="n">edition</span><span class="p">:</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">occ</span></code> has options, commands, and arguments. Options and arguments are
+optional, while commands are required. The syntax is:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">occ</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span> <span class="n">command</span> <span class="p">[</span><span class="n">arguments</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Get detailed information on individual commands with the <code class="docutils literal"><span class="pre">help</span></code> command, like
+this example for the <code class="docutils literal"><span class="pre">maintenance:mode</span></code> command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">help</span> <span class="n">maintenance</span><span class="p">:</span><span class="n">mode</span>
+<span class="n">Usage</span><span class="p">:</span>
+ <span class="n">maintenance</span><span class="p">:</span><span class="n">mode</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span>
+
+<span class="n">Options</span><span class="p">:</span>
+     <span class="o">--</span><span class="n">on</span>              <span class="n">enable</span> <span class="n">maintenance</span> <span class="n">mode</span>
+     <span class="o">--</span><span class="n">off</span>             <span class="n">disable</span> <span class="n">maintenance</span> <span class="n">mode</span>
+ <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>            <span class="n">Display</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span>
+ <span class="o">-</span><span class="n">q</span><span class="p">,</span> <span class="o">--</span><span class="n">quiet</span>           <span class="n">Do</span> <span class="ow">not</span> <span class="n">output</span> <span class="nb">any</span> <span class="n">message</span>
+ <span class="o">-</span><span class="n">V</span><span class="p">,</span> <span class="o">--</span><span class="n">version</span>         <span class="n">Display</span> <span class="n">this</span> <span class="n">application</span> <span class="n">version</span>
+     <span class="o">--</span><span class="n">ansi</span>            <span class="n">Force</span> <span class="n">ANSI</span> <span class="n">output</span>
+     <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">ansi</span>         <span class="n">Disable</span> <span class="n">ANSI</span> <span class="n">output</span>
+ <span class="o">-</span><span class="n">n</span><span class="p">,</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">interaction</span>  <span class="n">Do</span> <span class="ow">not</span> <span class="n">ask</span> <span class="nb">any</span> <span class="n">interactive</span> <span class="n">question</span>
+     <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">warnings</span>     <span class="n">Skip</span> <span class="k">global</span> <span class="n">warnings</span><span class="p">,</span> <span class="n">show</span> <span class="n">command</span> <span class="n">output</span> <span class="n">only</span>
+ <span class="o">-</span><span class="n">v</span><span class="o">|</span><span class="n">vv</span><span class="o">|</span><span class="n">vvv</span><span class="p">,</span> <span class="o">--</span><span class="n">verbose</span>  <span class="n">Increase</span> <span class="n">the</span> <span class="n">verbosity</span> <span class="n">of</span> <span class="n">messages</span><span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">normal</span> <span class="n">output</span><span class="p">,</span>
+                       <span class="mi">2</span> <span class="k">for</span> <span class="n">more</span> <span class="n">verbose</span> <span class="n">output</span> <span class="ow">and</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">debug</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">status</span></code> command from above has an option to define the output format.
+The default is plain text, but it can also be <code class="docutils literal"><span class="pre">json</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">status</span> <span class="o">--</span><span class="n">output</span><span class="o">=</span><span class="n">json</span>
+<span class="p">{</span><span class="s2">&quot;installed&quot;</span><span class="p">:</span><span class="n">true</span><span class="p">,</span><span class="s2">&quot;version&quot;</span><span class="p">:</span><span class="s2">&quot;9.0.0.19&quot;</span><span class="p">,</span><span class="s2">&quot;versionstring&quot;</span><span class="p">:</span><span class="s2">&quot;9.0.0&quot;</span><span class="p">,</span><span class="s2">&quot;edition&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>or <code class="docutils literal"><span class="pre">json_pretty</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">status</span> <span class="o">--</span><span class="n">output</span><span class="o">=</span><span class="n">json_pretty</span>
+<span class="p">{</span>
+   <span class="s2">&quot;installed&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+   <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;9.0.0.19&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;versionstring&quot;</span><span class="p">:</span> <span class="s2">&quot;9.0.0&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;edition&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This output option is available on all list and list-like commands:
+<code class="docutils literal"><span class="pre">status</span></code>, <code class="docutils literal"><span class="pre">check</span></code>, <code class="docutils literal"><span class="pre">app:list</span></code>, <code class="docutils literal"><span class="pre">config:list</span></code>, <code class="docutils literal"><span class="pre">encryption:status</span></code>
+and <code class="docutils literal"><span class="pre">encryption:list-modules</span></code></p>
+</div>
+<div class="section" id="apps-commands">
+<span id="apps-commands-label"></span><h2>Apps Commands<a class="headerlink" href="#apps-commands" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">app</span></code> commands list, enable, and disable apps:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">app</span>
+ <span class="n">app</span><span class="p">:</span><span class="n">check</span><span class="o">-</span><span class="n">code</span>   <span class="n">check</span> <span class="n">code</span> <span class="n">to</span> <span class="n">be</span> <span class="n">compliant</span>
+ <span class="n">app</span><span class="p">:</span><span class="n">disable</span>      <span class="n">disable</span> <span class="n">an</span> <span class="n">app</span>
+ <span class="n">app</span><span class="p">:</span><span class="n">enable</span>       <span class="n">enable</span> <span class="n">an</span> <span class="n">app</span>
+ <span class="n">app</span><span class="p">:</span><span class="n">getpath</span>      <span class="n">Get</span> <span class="n">an</span> <span class="n">absolute</span> <span class="n">path</span> <span class="n">to</span> <span class="n">the</span> <span class="n">app</span> <span class="n">directory</span>
+                  <span class="p">(</span><span class="n">added</span> <span class="ow">in</span> <span class="mf">9.0</span><span class="p">)</span>
+ <span class="n">app</span><span class="p">:</span><span class="nb">list</span>         <span class="n">List</span> <span class="nb">all</span> <span class="n">available</span> <span class="n">apps</span>
+</pre></div>
+</div>
+<p>List all of your installed apps, and show whether they are
+enabled or disabled:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">app</span><span class="p">:</span><span class="nb">list</span>
+</pre></div>
+</div>
+<p>Enable an app, for example the External Storage Support app:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">app</span><span class="p">:</span><span class="n">enable</span> <span class="n">files_external</span>
+<span class="n">files_external</span> <span class="n">enabled</span>
+</pre></div>
+</div>
+<p>Disable an app:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">app</span><span class="p">:</span><span class="n">disable</span> <span class="n">files_external</span>
+<span class="n">files_external</span> <span class="n">disabled</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">app:check-code</span></code> has multiple checks: it checks if an app uses ownCloud’s
+public API (<code class="docutils literal"><span class="pre">OCP</span></code>) or private API (<code class="docutils literal"><span class="pre">OC_</span></code>), and it also checks for deprecated
+methods and the validity of the <code class="docutils literal"><span class="pre">info.xml</span></code> file. By default all checks are
+enabled. The Activity app is an example of a correctly-formatted app:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo -u www-data php occ app:check-code notifications
+App is compliant - awesome job!
+</pre></div>
+</div>
+<p>If your app has issues, you’ll see output like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">app</span><span class="p">:</span><span class="n">check</span><span class="o">-</span><span class="n">code</span> <span class="n">foo_app</span>
+<span class="n">Analysing</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">owncloud</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">files</span><span class="o">/</span><span class="n">foo_app</span><span class="o">.</span><span class="n">php</span>
+<span class="mi">4</span> <span class="n">errors</span>
+   <span class="n">line</span>   <span class="mi">45</span><span class="p">:</span> <span class="n">OCP</span>\<span class="n">Response</span> <span class="o">-</span> <span class="n">Static</span> <span class="n">method</span> <span class="n">of</span> <span class="n">deprecated</span> <span class="k">class</span> <span class="nc">must</span> <span class="ow">not</span> <span class="n">be</span>
+   <span class="n">called</span>
+   <span class="n">line</span>   <span class="mi">46</span><span class="p">:</span> <span class="n">OCP</span>\<span class="n">Response</span> <span class="o">-</span> <span class="n">Static</span> <span class="n">method</span> <span class="n">of</span> <span class="n">deprecated</span> <span class="k">class</span> <span class="nc">must</span> <span class="ow">not</span> <span class="n">be</span>
+   <span class="n">called</span>
+   <span class="n">line</span>   <span class="mi">47</span><span class="p">:</span> <span class="n">OCP</span>\<span class="n">Response</span> <span class="o">-</span> <span class="n">Static</span> <span class="n">method</span> <span class="n">of</span> <span class="n">deprecated</span> <span class="k">class</span> <span class="nc">must</span> <span class="ow">not</span> <span class="n">be</span>
+   <span class="n">called</span>
+   <span class="n">line</span>   <span class="mi">49</span><span class="p">:</span> <span class="n">OC_Util</span> <span class="o">-</span> <span class="n">Static</span> <span class="n">method</span> <span class="n">of</span> <span class="n">private</span> <span class="k">class</span> <span class="nc">must</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">called</span>
+</pre></div>
+</div>
+<p>You can get the full filepath to an app:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">app</span><span class="p">:</span><span class="n">getpath</span> <span class="n">notifications</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">owncloud</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">notifications</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="background-jobs-selector">
+<span id="background-jobs-selector-label"></span><h2>Background Jobs Selector<a class="headerlink" href="#background-jobs-selector" title="Permalink to this headline">¶</a></h2>
+<p>Use the <code class="docutils literal"><span class="pre">background</span></code> command to select which scheduler you want to use for
+controlling background jobs, Ajax, Webcron, or Cron. This is the same as using
+the <strong>Cron</strong> section on your ownCloud Admin page:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">background</span>
+ <span class="n">background</span><span class="p">:</span><span class="n">ajax</span>       <span class="n">Use</span> <span class="n">ajax</span> <span class="n">to</span> <span class="n">run</span> <span class="n">background</span> <span class="n">jobs</span>
+ <span class="n">background</span><span class="p">:</span><span class="n">cron</span>       <span class="n">Use</span> <span class="n">cron</span> <span class="n">to</span> <span class="n">run</span> <span class="n">background</span> <span class="n">jobs</span>
+ <span class="n">background</span><span class="p">:</span><span class="n">webcron</span>    <span class="n">Use</span> <span class="n">webcron</span> <span class="n">to</span> <span class="n">run</span> <span class="n">background</span> <span class="n">jobs</span>
+</pre></div>
+</div>
+<p>This example selects Ajax:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">background</span><span class="p">:</span><span class="n">ajax</span>
+  <span class="n">Set</span> <span class="n">mode</span> <span class="k">for</span> <span class="n">background</span> <span class="n">jobs</span> <span class="n">to</span> <span class="s1">&#39;ajax&#39;</span>
+</pre></div>
+</div>
+<p>The other two commands are:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">background:cron</span></code></li>
+<li><code class="docutils literal"><span class="pre">background:webcron</span></code></li>
+</ul>
+<p>See <a class="reference internal" href="background_jobs_configuration.html"><span class="doc">Background Jobs</span></a> to learn more.</p>
+</div>
+<div class="section" id="config-commands">
+<span id="config-commands-label"></span><h2>Config Commands<a class="headerlink" href="#config-commands" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">config</span></code> commands are used to configure the ownCloud server:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">config</span>
+ <span class="n">config</span><span class="p">:</span><span class="n">app</span><span class="p">:</span><span class="n">delete</span>      <span class="n">Delete</span> <span class="n">an</span> <span class="n">app</span> <span class="n">config</span> <span class="n">value</span>
+ <span class="n">config</span><span class="p">:</span><span class="n">app</span><span class="p">:</span><span class="n">get</span>         <span class="n">Get</span> <span class="n">an</span> <span class="n">app</span> <span class="n">config</span> <span class="n">value</span>
+ <span class="n">config</span><span class="p">:</span><span class="n">app</span><span class="p">:</span><span class="nb">set</span>         <span class="n">Set</span> <span class="n">an</span> <span class="n">app</span> <span class="n">config</span> <span class="n">value</span>
+ <span class="n">config</span><span class="p">:</span><span class="kn">import</span>          <span class="nn">Import</span> <span class="n">a</span> <span class="nb">list</span> <span class="n">of</span> <span class="n">configs</span>
+ <span class="n">config</span><span class="p">:</span><span class="nb">list</span>            <span class="n">List</span> <span class="nb">all</span> <span class="n">configs</span>
+ <span class="n">config</span><span class="p">:</span><span class="n">system</span><span class="p">:</span><span class="n">delete</span>   <span class="n">Delete</span> <span class="n">a</span> <span class="n">system</span> <span class="n">config</span> <span class="n">value</span>
+ <span class="n">config</span><span class="p">:</span><span class="n">system</span><span class="p">:</span><span class="n">get</span>      <span class="n">Get</span> <span class="n">a</span> <span class="n">system</span> <span class="n">config</span> <span class="n">value</span>
+ <span class="n">config</span><span class="p">:</span><span class="n">system</span><span class="p">:</span><span class="nb">set</span>      <span class="n">Set</span> <span class="n">a</span> <span class="n">system</span> <span class="n">config</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p>You can list all configuration values with one command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="nb">list</span>
+</pre></div>
+</div>
+<p>By default, passwords and other sensitive data are omitted from the report, so
+the output can be posted publicly (e.g. as part of a bug report). In order to
+generate a full backport of all configuration values the <code class="docutils literal"><span class="pre">--private</span></code> flag
+needs to be set:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="nb">list</span> <span class="o">--</span><span class="n">private</span>
+</pre></div>
+</div>
+<p>The exported content can also be imported again to allow the fast setup of
+similar instances. The import command will only add or update values. Values
+that exist in the current configuration, but not in the one that is being
+imported are left untouched:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="kn">import</span> <span class="nn">filename.json</span>
+</pre></div>
+</div>
+<p>It is also possible to import remote files, by piping the input:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="kn">import</span> <span class="o">&lt;</span> <span class="n">local</span><span class="o">-</span><span class="n">backup</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">While it is possible to update/set/delete the versions and installation
+statuses of apps and ownCloud itself, it is <strong>not</strong> recommended to do this
+directly. Use the <code class="docutils literal"><span class="pre">occ</span> <span class="pre">app:enable</span></code>, <code class="docutils literal"><span class="pre">occ</span> <span class="pre">app:disable</span></code> and <code class="docutils literal"><span class="pre">occ</span> <span class="pre">update</span></code>
+commands instead.</p>
+</div>
+<div class="section" id="getting-a-single-configuration-value">
+<h3>Getting a Single Configuration Value<a class="headerlink" href="#getting-a-single-configuration-value" title="Permalink to this headline">¶</a></h3>
+<p>These commands get the value of a single app or system configuration:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="n">system</span><span class="p">:</span><span class="n">get</span> <span class="n">version</span>
+<span class="mf">9.0</span><span class="o">.</span><span class="mf">0.19</span>
+
+<span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="n">app</span><span class="p">:</span><span class="n">get</span> <span class="n">activity</span> <span class="n">installed_version</span>
+<span class="mf">2.2</span><span class="o">.</span><span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-a-single-configuration-value">
+<h3>Setting a Single Configuration Value<a class="headerlink" href="#setting-a-single-configuration-value" title="Permalink to this headline">¶</a></h3>
+<p>These commands set the value of a single app or system configuration:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="n">system</span><span class="p">:</span><span class="nb">set</span> <span class="n">logtimezone</span>
+<span class="o">--</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;Europe/Berlin&quot;</span>
+<span class="n">System</span> <span class="n">config</span> <span class="n">value</span> <span class="n">logtimezone</span> <span class="nb">set</span> <span class="n">to</span> <span class="n">Europe</span><span class="o">/</span><span class="n">Berlin</span>
+
+<span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="n">app</span><span class="p">:</span><span class="nb">set</span> <span class="n">files_sharing</span>
+<span class="n">incoming_server2server_share_enabled</span> <span class="o">--</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;yes&quot;</span> <span class="o">--</span><span class="nb">type</span><span class="o">=</span><span class="n">boolean</span>
+<span class="n">Config</span> <span class="n">value</span> <span class="n">incoming_server2server_share_enabled</span> <span class="k">for</span> <span class="n">app</span> <span class="n">files_sharing</span> <span class="nb">set</span> <span class="n">to</span> <span class="n">yes</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">config:system:set</span></code> command creates the value, if it does not already
+exist. To update an existing value,  set <code class="docutils literal"><span class="pre">--update-only</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="n">system</span><span class="p">:</span><span class="nb">set</span> <span class="n">doesnotexist</span> <span class="o">--</span><span class="n">value</span><span class="o">=</span><span class="s2">&quot;true&quot;</span>
+<span class="o">--</span><span class="nb">type</span><span class="o">=</span><span class="n">boolean</span> <span class="o">--</span><span class="n">update</span><span class="o">-</span><span class="n">only</span>
+<span class="n">Value</span> <span class="ow">not</span> <span class="n">updated</span><span class="p">,</span> <span class="k">as</span> <span class="n">it</span> <span class="n">has</span> <span class="ow">not</span> <span class="n">been</span> <span class="nb">set</span> <span class="n">before</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Note that in order to write a Boolean, float, or integer value to the
+configuration file, you need to specify the type on your command. This
+applies only to the <code class="docutils literal"><span class="pre">config:system:set</span></code> command. The following values are
+known:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">boolean</span></code></li>
+<li><code class="docutils literal"><span class="pre">integer</span></code></li>
+<li><code class="docutils literal"><span class="pre">float</span></code></li>
+<li><code class="docutils literal"><span class="pre">string</span></code> (default)</li>
+</ul>
+<p>When you want to e.g. disable the maintenance mode run the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="n">system</span><span class="p">:</span><span class="nb">set</span> <span class="n">maintenance</span> <span class="o">--</span><span class="n">value</span><span class="o">=</span><span class="n">false</span>
+<span class="o">--</span><span class="nb">type</span><span class="o">=</span><span class="n">boolean</span>
+<span class="n">ownCloud</span> <span class="ow">is</span> <span class="ow">in</span> <span class="n">maintenance</span> <span class="n">mode</span> <span class="o">-</span> <span class="n">no</span> <span class="n">app</span> <span class="n">have</span> <span class="n">been</span> <span class="n">loaded</span>
+<span class="n">System</span> <span class="n">config</span> <span class="n">value</span> <span class="n">maintenance</span> <span class="nb">set</span> <span class="n">to</span> <span class="n">boolean</span> <span class="n">false</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-an-array-configuration-value">
+<h3>Setting an array Configuration Value<a class="headerlink" href="#setting-an-array-configuration-value" title="Permalink to this headline">¶</a></h3>
+<p>Some configurations (e.g. the trusted domain setting) are an array of data.
+In order to set (and also get) the value of one key, you can specify multiple
+<code class="docutils literal"><span class="pre">config</span></code> names separated by spaces:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="n">system</span><span class="p">:</span><span class="n">get</span> <span class="n">trusted_domains</span>
+<span class="n">localhost</span>
+<span class="n">owncloud</span><span class="o">.</span><span class="n">local</span>
+<span class="n">sample</span><span class="o">.</span><span class="n">tld</span>
+</pre></div>
+</div>
+<p>To replace <code class="docutils literal"><span class="pre">sample.tld</span></code> with <code class="docutils literal"><span class="pre">example.com</span></code> trusted_domains =&gt; 2 needs to be
+set:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="n">system</span><span class="p">:</span><span class="nb">set</span> <span class="n">trusted_domains</span> <span class="mi">2</span>
+<span class="o">--</span><span class="n">value</span><span class="o">=</span><span class="n">example</span><span class="o">.</span><span class="n">com</span>
+<span class="n">System</span> <span class="n">config</span> <span class="n">value</span> <span class="n">trusted_domains</span> <span class="o">=&gt;</span> <span class="mi">2</span> <span class="nb">set</span> <span class="n">to</span> <span class="n">string</span> <span class="n">example</span><span class="o">.</span><span class="n">com</span>
+
+<span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="n">system</span><span class="p">:</span><span class="n">get</span> <span class="n">trusted_domains</span>
+<span class="n">localhost</span>
+<span class="n">owncloud</span><span class="o">.</span><span class="n">local</span>
+<span class="n">example</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deleting-a-single-configuration-value">
+<h3>Deleting a Single Configuration Value<a class="headerlink" href="#deleting-a-single-configuration-value" title="Permalink to this headline">¶</a></h3>
+<p>These commands delete the configuration of an app or system configuration:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="n">system</span><span class="p">:</span><span class="n">delete</span> <span class="n">maintenance</span><span class="p">:</span><span class="n">mode</span>
+<span class="n">System</span> <span class="n">config</span> <span class="n">value</span> <span class="n">maintenance</span><span class="p">:</span><span class="n">mode</span> <span class="n">deleted</span>
+
+<span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="n">app</span><span class="p">:</span><span class="n">delete</span> <span class="n">appname</span> <span class="n">provisioning_api</span>
+<span class="n">Config</span> <span class="n">value</span> <span class="n">provisioning_api</span> <span class="n">of</span> <span class="n">app</span> <span class="n">appname</span> <span class="n">deleted</span>
+</pre></div>
+</div>
+<p>The delete command will by default not complain if the configuration was not set
+before. If you want to be notified in that case, set the
+<code class="docutils literal"><span class="pre">--error-if-not-exists</span></code> flag:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">config</span><span class="p">:</span><span class="n">system</span><span class="p">:</span><span class="n">delete</span> <span class="n">doesnotexist</span>
+<span class="o">--</span><span class="n">error</span><span class="o">-</span><span class="k">if</span><span class="o">-</span><span class="ow">not</span><span class="o">-</span><span class="n">exists</span>
+<span class="n">Config</span> <span class="n">provisioning_api</span> <span class="n">of</span> <span class="n">app</span> <span class="n">appname</span> <span class="n">could</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">deleted</span> <span class="n">because</span> <span class="n">it</span> <span class="n">did</span> <span class="ow">not</span>
+<span class="n">exist</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dav-commands">
+<span id="dav-label"></span><h2>Dav Commands<a class="headerlink" href="#dav-commands" title="Permalink to this headline">¶</a></h2>
+<p>A set of commands to create addressbooks, calendars, and to
+migrate addressbooks from 8.2 when you upgrade to 9.0:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">dav</span>
+ <span class="n">dav</span><span class="p">:</span><span class="n">create</span><span class="o">-</span><span class="n">addressbook</span>        <span class="n">Create</span> <span class="n">a</span> <span class="n">dav</span> <span class="n">addressbook</span>
+ <span class="n">dav</span><span class="p">:</span><span class="n">create</span><span class="o">-</span><span class="n">calendar</span>           <span class="n">Create</span> <span class="n">a</span> <span class="n">dav</span> <span class="n">calendar</span>
+ <span class="n">dav</span><span class="p">:</span><span class="n">migrate</span><span class="o">-</span><span class="n">addressbooks</span>      <span class="n">Migrate</span> <span class="n">addressbooks</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">contacts</span>
+                               <span class="n">app</span> <span class="n">to</span> <span class="n">core</span>
+ <span class="n">dav</span><span class="p">:</span><span class="n">migrate</span><span class="o">-</span><span class="n">calendars</span>         <span class="n">Migrate</span> <span class="n">calendars</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">calendar</span> <span class="n">app</span> <span class="n">to</span>
+                               <span class="n">core</span>
+ <span class="n">dav</span><span class="p">:</span><span class="n">sync</span><span class="o">-</span><span class="n">birthday</span><span class="o">-</span><span class="n">calendar</span>    <span class="n">Synchronizes</span> <span class="n">the</span> <span class="n">birthday</span> <span class="n">calendar</span>
+ <span class="n">dav</span><span class="p">:</span><span class="n">sync</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">addressbook</span>   <span class="n">Synchronizes</span> <span class="n">users</span> <span class="n">to</span> <span class="n">the</span> <span class="n">system</span>
+                               <span class="n">addressbook</span>
+</pre></div>
+</div>
+<p>The syntax for <code class="docutils literal"><span class="pre">dav:create-addressbook</span></code> and  <code class="docutils literal"><span class="pre">dav:create-calendar</span></code> is
+<code class="docutils literal"><span class="pre">dav:create-addressbook</span> <span class="pre">[user]</span> <span class="pre">[name]</span></code>. This example creates the addressbook
+<code class="docutils literal"><span class="pre">mollybook</span></code> for the user molly:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">dav</span><span class="p">:</span><span class="n">create</span><span class="o">-</span><span class="n">addressbook</span> <span class="n">molly</span> <span class="n">mollybook</span>
+</pre></div>
+</div>
+<p>This example creates a new calendar for molly:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">dav</span><span class="p">:</span><span class="n">create</span><span class="o">-</span><span class="n">calendar</span> <span class="n">molly</span> <span class="n">mollycal</span>
+</pre></div>
+</div>
+<p>Molly will immediately see these on her Calendar and Contacts pages.</p>
+<p>In 9.0, the CalDAV server has been integrated into core. Your existing
+calendars and contacts should migrate automatically when you upgrade. If
+something goes wrong you can try a manual migration. First delete any
+partially-migrated calendars or addressbooks. Then run this
+command to migrate user’s contacts:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">dav</span><span class="p">:</span><span class="n">migrate</span><span class="o">-</span><span class="n">addressbooks</span> <span class="p">[</span><span class="n">user</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Run this command to migrate calendars:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">dav</span><span class="p">:</span><span class="n">migrate</span><span class="o">-</span><span class="n">calendars</span> <span class="p">[</span><span class="n">user</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="http://morrisjobke.de/2016/03/07/ownCloud-9.0-calendar-migration-analysis/">ownCloud 9.0 - calendar migration analysis</a>
+for help with troubleshooting and reporting problems.</p>
+<p><code class="docutils literal"><span class="pre">dav:sync-birthday-calendar</span></code> adds all birthdays to your calendar from
+addressbooks shared with you. This example syncs to your calendar from user
+bernie:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">dav</span><span class="p">:</span><span class="n">sync</span><span class="o">-</span><span class="n">birthday</span><span class="o">-</span><span class="n">calendar</span> <span class="n">bernie</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">dav:sync-system-addressbook</span></code> synchronizes all users to the system
+addressbook:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">dav</span><span class="p">:</span><span class="n">sync</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">addressbook</span>
+</pre></div>
+</div>
+<p>Added in 9.0.</p>
+</div>
+<div class="section" id="database-conversion">
+<span id="database-conversion-label"></span><h2>Database Conversion<a class="headerlink" href="#database-conversion" title="Permalink to this headline">¶</a></h2>
+<p>The SQLite database is good for testing, and for ownCloud servers with small
+single-user workloads that do not use sync clients, but production servers with
+multiple users should use MariaDB, MySQL, or PostgreSQL. You can use <code class="docutils literal"><span class="pre">occ</span></code> to
+convert from SQLite to one of these other databases.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">db</span>
+ <span class="n">db</span><span class="p">:</span><span class="n">convert</span><span class="o">-</span><span class="nb">type</span>           <span class="n">Convert</span> <span class="n">the</span> <span class="n">ownCloud</span> <span class="n">database</span> <span class="n">to</span> <span class="n">the</span> <span class="n">newly</span>
+                           <span class="n">configured</span> <span class="n">one</span>
+ <span class="n">db</span><span class="p">:</span><span class="n">generate</span><span class="o">-</span><span class="n">change</span><span class="o">-</span><span class="n">script</span> <span class="n">generates</span> <span class="n">the</span> <span class="n">change</span> <span class="n">script</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">current</span>
+                           <span class="n">connected</span> <span class="n">db</span> <span class="n">to</span> <span class="n">db_structure</span><span class="o">.</span><span class="n">xml</span>
+</pre></div>
+</div>
+<p>You need:</p>
+<ul class="simple">
+<li>Your desired database and its PHP connector installed.</li>
+<li>The login and password of a database admin user.</li>
+<li>The database port number, if it is a non-standard port.</li>
+</ul>
+<p>This is example converts SQLite to MySQL/MariaDB:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">db</span><span class="p">:</span><span class="n">convert</span><span class="o">-</span><span class="nb">type</span> <span class="n">mysql</span> <span class="n">oc_dbuser</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>
+<span class="n">oc_database</span>
+</pre></div>
+</div>
+<p>For a more detailed explanation see
+<a class="reference internal" href="../configuration_database/db_conversion.html"><span class="doc">Converting Database Type</span></a></p>
+</div>
+<div class="section" id="encryption">
+<span id="encryption-label"></span><h2>Encryption<a class="headerlink" href="#encryption" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">occ</span></code> includes a complete set of commands for managing encryption:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>encryption
+ encryption:change-key-storage-root   Change key storage root
+ encryption:decrypt-all               Disable server-side encryption and
+                                      decrypt all files
+ encryption:disable                   Disable encryption
+ encryption:enable                    Enable encryption
+ encryption:enable-master-key         Enable the master key. Only available
+                                      for fresh installations with no existing
+                                      encrypted data! There is also no way to
+                                      disable it again.
+ encryption:encrypt-all               Encrypt all files for all users
+ encryption:list-modules              List all available encryption modules
+ encryption:migrate                   initial migration to encryption 2.0
+ encryption:set-default-module        Set the encryption default module
+ encryption:show-key-storage-root     Show current key storage root
+ encryption:status                    Lists the current status of encryption
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">encryption:status</span></code> shows whether you have active encryption, and your default
+encryption module. To enable encryption you must first enable the Encryption
+app, and then run <code class="docutils literal"><span class="pre">encryption:enable</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">app</span><span class="p">:</span><span class="n">enable</span> <span class="n">encryption</span>
+<span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">encryption</span><span class="p">:</span><span class="n">enable</span>
+<span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">encryption</span><span class="p">:</span><span class="n">status</span>
+ <span class="o">-</span> <span class="n">enabled</span><span class="p">:</span> <span class="n">true</span>
+ <span class="o">-</span> <span class="n">defaultModule</span><span class="p">:</span> <span class="n">OC_DEFAULT_MODULE</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">encryption:change-key-storage-root</span></code> is for moving your encryption keys to a
+different folder. It takes one argument, <code class="docutils literal"><span class="pre">newRoot</span></code>, which defines your new
+root folder. The folder must exist, and the path is relative to your root ownCloud directory:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">encryption</span><span class="p">:</span><span class="n">change</span><span class="o">-</span><span class="n">key</span><span class="o">-</span><span class="n">storage</span><span class="o">-</span><span class="n">root</span> <span class="o">../../</span><span class="n">etc</span><span class="o">/</span><span class="n">oc</span><span class="o">-</span><span class="n">keys</span>
+</pre></div>
+</div>
+<p>You can see the current location of your keys folder:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">encryption</span><span class="p">:</span><span class="n">show</span><span class="o">-</span><span class="n">key</span><span class="o">-</span><span class="n">storage</span><span class="o">-</span><span class="n">root</span>
+<span class="n">Current</span> <span class="n">key</span> <span class="n">storage</span> <span class="n">root</span><span class="p">:</span>  <span class="n">default</span> <span class="n">storage</span> <span class="n">location</span> <span class="p">(</span><span class="n">data</span><span class="o">/</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">encryption:list-modules</span></code> displays your available encryption modules. You will
+see a list of modules only if you have enabled the Encryption app. Use
+<code class="docutils literal"><span class="pre">encryption:set-default-module</span> <span class="pre">[module</span> <span class="pre">name]</span></code> to set your desired module.</p>
+<p><code class="docutils literal"><span class="pre">encryption:encrypt-all</span></code> encrypts all data files for all users. You must first
+put your ownCloud server into <a class="reference internal" href="#maintenance-commands-label"><span class="std std-ref">single-user
+mode</span></a> to prevent any user activity until encryption
+is completed.</p>
+<p><code class="docutils literal"><span class="pre">encryption:decrypt-all</span></code> decrypts all user data files, or optionally a single
+user:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">encryption</span><span class="p">:</span><span class="n">decrypt</span> <span class="n">freda</span>
+</pre></div>
+</div>
+<p>Users must have enabled recovery keys on their Personal pages. You must first
+put your ownCloud server into <a class="reference internal" href="#maintenance-commands-label"><span class="std std-ref">single-user
+mode</span></a> to prevent any user activity until
+decryption is completed.</p>
+<p>Use <code class="docutils literal"><span class="pre">encryption:disable</span></code> to disable your encryption module. You must first put
+your ownCloud server into <a class="reference internal" href="#maintenance-commands-label"><span class="std std-ref">single-user mode</span></a>
+to prevent any user activity.</p>
+<p><code class="docutils literal"><span class="pre">encryption:enable-master-key</span></code> creates a new master key, which is used for all
+user data instead of individual user keys. This is especially useful to enable
+single-sign on. Use this only on fresh installations with no existing data, or
+on systems where encryption has not already been enabled. It is not possible to
+disable it.</p>
+<p><code class="docutils literal"><span class="pre">encryption:migrate</span></code> migrates encryption keys after a major ownCloud version
+upgrade. You may optionally specify individual users in a space-delimited list.</p>
+<p>See <a class="reference internal" href="../configuration_files/encryption_configuration.html"><span class="doc">Encryption Configuration</span></a> to learn more.</p>
+</div>
+<div class="section" id="federation-sync">
+<span id="federation-sync-label"></span><h2>Federation Sync<a class="headerlink" href="#federation-sync" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This command is only available when the “Federation” app (<code class="docutils literal"><span class="pre">federation</span></code>) is
+enabled.</p>
+</div>
+<p>Synchronize the addressbooks of all federated ownCloud servers:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">federation</span><span class="p">:</span><span class="n">sync</span><span class="o">-</span><span class="n">addressbooks</span>  <span class="n">Synchronizes</span> <span class="n">addressbooks</span> <span class="n">of</span> <span class="nb">all</span>
+                              <span class="n">federated</span> <span class="n">clouds</span>
+</pre></div>
+</div>
+<p>In ownCloud 9.+, servers connected with federation shares can share user
+address books, and auto-complete usernames in share dialogs. Use this command
+to synchronize federated servers:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">federation</span><span class="p">:</span><span class="n">sync</span><span class="o">-</span><span class="n">addressbooks</span>
+</pre></div>
+</div>
+<p>Added in 9.0.</p>
+</div>
+<div class="section" id="file-operations">
+<span id="file-operations-label"></span><h2>File Operations<a class="headerlink" href="#file-operations" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">occ</span></code> has three commands for managing files in ownCloud:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">files</span>
+ <span class="n">files</span><span class="p">:</span><span class="n">cleanup</span>              <span class="n">cleanup</span> <span class="n">filecache</span>
+ <span class="n">files</span><span class="p">:</span><span class="n">scan</span>                 <span class="n">rescan</span> <span class="n">filesystem</span>
+ <span class="n">files</span><span class="p">:</span><span class="n">transfer</span><span class="o">-</span><span class="n">ownership</span>   <span class="n">All</span> <span class="n">files</span> <span class="ow">and</span> <span class="n">folders</span> <span class="n">are</span> <span class="n">moved</span> <span class="n">to</span> <span class="n">another</span>
+                            <span class="n">user</span> <span class="o">-</span> <span class="n">shares</span> <span class="n">are</span> <span class="n">moved</span> <span class="k">as</span> <span class="n">well</span><span class="o">.</span> <span class="p">(</span><span class="n">Added</span> <span class="ow">in</span> <span class="mf">9.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">files:scan</span></code> command scans for new files and updates the file cache. You
+may rescan all files, per-user, a space-delimited list of users, and limit the
+search path. If not using <code class="docutils literal"><span class="pre">--quiet</span></code>, statistics will be shown at the end of
+the scan:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">files</span><span class="p">:</span><span class="n">scan</span> <span class="o">--</span><span class="n">help</span>
+  <span class="n">Usage</span><span class="p">:</span>
+  <span class="n">files</span><span class="p">:</span><span class="n">scan</span> <span class="p">[</span><span class="o">-</span><span class="n">p</span><span class="o">|--</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">q</span><span class="o">|--</span><span class="n">quiet</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">v</span><span class="o">|</span><span class="n">vv</span><span class="o">|</span><span class="n">vvv</span> <span class="o">--</span><span class="n">verbose</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="nb">all</span><span class="p">]</span>
+  <span class="p">[</span><span class="n">user_id1</span><span class="p">]</span> <span class="o">...</span> <span class="p">[</span><span class="n">user_idN</span><span class="p">]</span>
+
+<span class="n">Arguments</span><span class="p">:</span>
+  <span class="n">user_id</span>               <span class="n">will</span> <span class="n">rescan</span> <span class="nb">all</span> <span class="n">files</span> <span class="n">of</span> <span class="n">the</span> <span class="n">given</span> <span class="n">user</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+<span class="n">Options</span><span class="p">:</span>
+  <span class="o">--</span><span class="n">path</span>                <span class="n">limit</span> <span class="n">rescan</span> <span class="n">to</span> <span class="n">the</span> <span class="n">user</span><span class="o">/</span><span class="n">path</span> <span class="n">given</span>
+  <span class="o">--</span><span class="nb">all</span>                 <span class="n">will</span> <span class="n">rescan</span> <span class="nb">all</span> <span class="n">files</span> <span class="n">of</span> <span class="nb">all</span> <span class="n">known</span> <span class="n">users</span>
+  <span class="o">--</span><span class="n">quiet</span>               <span class="n">suppress</span> <span class="nb">any</span> <span class="n">output</span>
+  <span class="o">--</span><span class="n">verbose</span>             <span class="n">files</span> <span class="ow">and</span> <span class="n">directories</span> <span class="n">being</span> <span class="n">processed</span> <span class="n">are</span> <span class="n">shown</span>
+                        <span class="n">additionally</span> <span class="n">during</span> <span class="n">scanning</span>
+</pre></div>
+</div>
+<p>Verbosity levels of <code class="docutils literal"><span class="pre">-vv</span></code> or <code class="docutils literal"><span class="pre">-vvv</span></code> are automatically reset to <code class="docutils literal"><span class="pre">-v</span></code></p>
+<p>When using the <code class="docutils literal"><span class="pre">--path</span></code> option, the path must consist of following
+components:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;user_id/files/path&quot;</span>
+  <span class="ow">or</span>
+<span class="s2">&quot;user_id/files/mount_name&quot;</span>
+  <span class="ow">or</span>
+<span class="s2">&quot;user_id/files/mount_name/path&quot;</span>
+</pre></div>
+</div>
+<p>where the term <code class="docutils literal"><span class="pre">files</span></code> is mandatory.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">path</span><span class="o">=</span><span class="s2">&quot;/alice/files/Music&quot;</span>
+</pre></div>
+</div>
+<p>In the example above, the user_id <code class="docutils literal"><span class="pre">alice</span></code> is determined implicitly from the
+path component given.</p>
+<p>The <code class="docutils literal"><span class="pre">--path</span></code>, <code class="docutils literal"><span class="pre">--all</span></code> and <code class="docutils literal"><span class="pre">[user_id]</span></code> parameters and are exclusive - only
+one must be specified.</p>
+<p><code class="docutils literal"><span class="pre">files:cleanup</span></code> tidies up the server’s file cache by deleting all file
+entries that have no matching entries in the storage table.</p>
+<p>You may transfer all files and shares from one user to another. This is useful
+before removing a user:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">files</span><span class="p">:</span><span class="n">transfer</span><span class="o">-</span><span class="n">ownership</span> <span class="o">&lt;</span><span class="n">source</span><span class="o">-</span><span class="n">user</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">destination</span><span class="o">-</span><span class="n">user</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="files-external">
+<span id="files-external-label"></span><h2>Files External<a class="headerlink" href="#files-external" title="Permalink to this headline">¶</a></h2>
+<p>These commands replace the <code class="docutils literal"><span class="pre">data/mount.json</span></code> configuration file used in
+ownCloud releases before 9.0.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These commands are only available when the “External storage support” app
+(<code class="docutils literal"><span class="pre">files_external</span></code>) is enabled.</p>
+</div>
+<p>Commands for managing external storage:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">files_external</span>
+ <span class="n">files_external</span><span class="p">:</span><span class="n">applicable</span>  <span class="n">Manage</span> <span class="n">applicable</span> <span class="n">users</span> <span class="ow">and</span> <span class="n">groups</span> <span class="k">for</span> <span class="n">a</span> <span class="n">mount</span>
+ <span class="n">files_external</span><span class="p">:</span><span class="n">backends</span>    <span class="n">Show</span> <span class="n">available</span> <span class="n">authentication</span> <span class="ow">and</span> <span class="n">storage</span> <span class="n">backends</span>
+ <span class="n">files_external</span><span class="p">:</span><span class="n">config</span>      <span class="n">Manage</span> <span class="n">backend</span> <span class="n">configuration</span> <span class="k">for</span> <span class="n">a</span> <span class="n">mount</span>
+ <span class="n">files_external</span><span class="p">:</span><span class="n">create</span>      <span class="n">Create</span> <span class="n">a</span> <span class="n">new</span> <span class="n">mount</span> <span class="n">configuration</span>
+ <span class="n">files_external</span><span class="p">:</span><span class="n">delete</span>      <span class="n">Delete</span> <span class="n">an</span> <span class="n">external</span> <span class="n">mount</span>
+ <span class="n">files_external</span><span class="p">:</span><span class="n">export</span>      <span class="n">Export</span> <span class="n">mount</span> <span class="n">configurations</span>
+ <span class="n">files_external</span><span class="p">:</span><span class="kn">import</span>      <span class="nn">Import</span> <span class="n">mount</span> <span class="n">configurations</span>
+ <span class="n">files_external</span><span class="p">:</span><span class="nb">list</span>        <span class="n">List</span> <span class="n">configured</span> <span class="n">mounts</span>
+ <span class="n">files_external</span><span class="p">:</span><span class="n">option</span>      <span class="n">Manage</span> <span class="n">mount</span> <span class="n">options</span> <span class="k">for</span> <span class="n">a</span> <span class="n">mount</span>
+ <span class="n">files_external</span><span class="p">:</span><span class="n">verify</span>      <span class="n">Verify</span> <span class="n">mount</span> <span class="n">configuration</span>
+</pre></div>
+</div>
+<p>These commands replicate the functionality in the ownCloud Web GUI, plus two new
+features:  <code class="docutils literal"><span class="pre">files_external:export</span></code> and <code class="docutils literal"><span class="pre">files_external:import</span></code>.</p>
+<p>Use <code class="docutils literal"><span class="pre">files_external:export</span></code> to export all admin mounts to stdout, and
+<code class="docutils literal"><span class="pre">files_external:export</span> <span class="pre">[user_id]</span></code> to export the mounts of the specified
+ownCloud user.</p>
+<p>Use <code class="docutils literal"><span class="pre">files_external:import</span> <span class="pre">[filename]</span></code> to import legacy JSON configurations,
+and to copy external mount configurations to another ownCloud server.</p>
+<p>Added in 9.0.</p>
+</div>
+<div class="section" id="integrity-check">
+<span id="integrity-check-label"></span><h2>Integrity Check<a class="headerlink" href="#integrity-check" title="Permalink to this headline">¶</a></h2>
+<p>Apps which have an official tag MUST be code signed starting with ownCloud 9.0. Unsigned official apps won’t be installable anymore. Code signing is optional for all third-party applications:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">integrity</span>
+ <span class="n">integrity</span><span class="p">:</span><span class="n">check</span><span class="o">-</span><span class="n">app</span>                 <span class="n">Check</span> <span class="n">app</span> <span class="n">integrity</span> <span class="n">using</span> <span class="n">a</span> <span class="n">signature</span><span class="o">.</span>
+ <span class="n">integrity</span><span class="p">:</span><span class="n">check</span><span class="o">-</span><span class="n">core</span>                <span class="n">Check</span> <span class="n">core</span> <span class="n">integrity</span> <span class="n">using</span> <span class="n">a</span> <span class="n">signature</span><span class="o">.</span>
+ <span class="n">integrity</span><span class="p">:</span><span class="n">sign</span><span class="o">-</span><span class="n">app</span>                  <span class="n">Signs</span> <span class="n">an</span> <span class="n">app</span> <span class="n">using</span> <span class="n">a</span> <span class="n">private</span> <span class="n">key</span><span class="o">.</span>
+ <span class="n">integrity</span><span class="p">:</span><span class="n">sign</span><span class="o">-</span><span class="n">core</span>                 <span class="n">Sign</span> <span class="n">core</span> <span class="n">using</span> <span class="n">a</span> <span class="n">private</span> <span class="n">key</span>
+</pre></div>
+</div>
+<p>After creating your signing key, sign your app like this example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">integrity</span><span class="p">:</span><span class="n">sign</span><span class="o">-</span><span class="n">app</span> <span class="o">--</span><span class="n">privateKey</span><span class="o">=/</span><span class="n">Users</span><span class="o">/</span><span class="n">lukasreschke</span><span class="o">/</span><span class="n">contacts</span><span class="o">.</span><span class="n">key</span> <span class="o">--</span><span class="n">certificate</span><span class="o">=/</span><span class="n">Users</span><span class="o">/</span><span class="n">lukasreschke</span><span class="o">/</span><span class="n">CA</span><span class="o">/</span><span class="n">contacts</span><span class="o">.</span><span class="n">crt</span> <span class="o">--</span><span class="n">path</span><span class="o">=/</span><span class="n">Users</span><span class="o">/</span><span class="n">lukasreschke</span><span class="o">/</span><span class="n">Programming</span><span class="o">/</span><span class="n">contacts</span>
+</pre></div>
+</div>
+<p>Verify your app:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">integrity</span><span class="p">:</span><span class="n">check</span><span class="o">-</span><span class="n">app</span> <span class="o">--</span><span class="n">path</span><span class="o">=/</span><span class="n">pathto</span><span class="o">/</span><span class="n">app</span> <span class="n">appname</span>
+</pre></div>
+</div>
+<p>When it returns nothing, your app is signed correctly. When it returns a message then there is an error. See <a class="reference external" href="https://doc.owncloud.org/server/9.0/developer_manual/app/code_signing.html#how-to-get-your-app-signed">Code Signing</a> in the Developer manual for more detailed information.</p>
+<p><code class="docutils literal"><span class="pre">integrity:sign-core</span></code> is for ownCloud core developers only.</p>
+<p>See <a class="reference internal" href="../issues/code_signing.html"><span class="doc">Code Signing</span></a> to learn more.</p>
+<p>Added in 9.0.</p>
+</div>
+<div class="section" id="l10n-create-javascript-translation-files-for-apps">
+<span id="create-javascript-translation-files-label"></span><h2>l10n, Create Javascript Translation Files for Apps<a class="headerlink" href="#l10n-create-javascript-translation-files-for-apps" title="Permalink to this headline">¶</a></h2>
+<p>This command is for app developers to update their translation mechanism from
+ownCloud 7 to ownCloud 8 and later.</p>
+</div>
+<div class="section" id="ldap-commands">
+<span id="ldap-commands-label"></span><h2>LDAP Commands<a class="headerlink" href="#ldap-commands" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These commands are only available when the “LDAP user and group backend” app
+(<code class="docutils literal"><span class="pre">user_ldap</span></code>) is enabled.</p>
+</div>
+<p>These LDAP commands appear only when you have enabled the LDAP app. Then
+you can run the following LDAP commands with <code class="docutils literal"><span class="pre">occ</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ldap</span>
+ <span class="n">ldap</span><span class="p">:</span><span class="n">check</span><span class="o">-</span><span class="n">user</span>               <span class="n">checks</span> <span class="n">whether</span> <span class="n">a</span> <span class="n">user</span> <span class="n">exists</span> <span class="n">on</span> <span class="n">LDAP</span><span class="o">.</span>
+ <span class="n">ldap</span><span class="p">:</span><span class="n">create</span><span class="o">-</span><span class="n">empty</span><span class="o">-</span><span class="n">config</span>      <span class="n">creates</span> <span class="n">an</span> <span class="n">empty</span> <span class="n">LDAP</span> <span class="n">configuration</span>
+ <span class="n">ldap</span><span class="p">:</span><span class="n">delete</span><span class="o">-</span><span class="n">config</span>            <span class="n">deletes</span> <span class="n">an</span> <span class="n">existing</span> <span class="n">LDAP</span> <span class="n">configuration</span>
+ <span class="n">ldap</span><span class="p">:</span><span class="n">search</span>                   <span class="n">executes</span> <span class="n">a</span> <span class="n">user</span> <span class="ow">or</span> <span class="n">group</span> <span class="n">search</span>
+ <span class="n">ldap</span><span class="p">:</span><span class="nb">set</span><span class="o">-</span><span class="n">config</span>               <span class="n">modifies</span> <span class="n">an</span> <span class="n">LDAP</span> <span class="n">configuration</span>
+ <span class="n">ldap</span><span class="p">:</span><span class="n">show</span><span class="o">-</span><span class="n">config</span>              <span class="n">shows</span> <span class="n">the</span> <span class="n">LDAP</span> <span class="n">configuration</span>
+ <span class="n">ldap</span><span class="p">:</span><span class="n">show</span><span class="o">-</span><span class="n">remnants</span>            <span class="n">shows</span> <span class="n">which</span> <span class="n">users</span> <span class="n">are</span> <span class="ow">not</span> <span class="n">available</span> <span class="n">on</span>
+                               <span class="n">LDAP</span> <span class="n">anymore</span><span class="p">,</span> <span class="n">but</span> <span class="n">have</span> <span class="n">remnants</span> <span class="ow">in</span>
+                               <span class="n">ownCloud</span><span class="o">.</span>
+ <span class="n">ldap</span><span class="p">:</span><span class="n">test</span><span class="o">-</span><span class="n">config</span>              <span class="n">tests</span> <span class="n">an</span> <span class="n">LDAP</span> <span class="n">configuration</span>
+</pre></div>
+</div>
+<p>Search for an LDAP user, using this syntax:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">ldap</span><span class="p">:</span><span class="n">search</span> <span class="p">[</span><span class="o">--</span><span class="n">group</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">offset</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">]</span>
+<span class="p">[</span><span class="o">--</span><span class="n">limit</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">]</span> <span class="n">search</span>
+</pre></div>
+</div>
+<p>Searches will match at the beginning of the attribute value only. This example
+searches for givenNames that start with “rob”:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">ldap</span><span class="p">:</span><span class="n">search</span> <span class="s2">&quot;rob&quot;</span>
+</pre></div>
+</div>
+<p>This will find robbie, roberta, and robin. Broaden the search to find, for
+example, <code class="docutils literal"><span class="pre">jeroboam</span></code> with the asterisk wildcard:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">ldap</span><span class="p">:</span><span class="n">search</span> <span class="s2">&quot;*rob&quot;</span>
+</pre></div>
+</div>
+<p>User search attributes are set with <code class="docutils literal"><span class="pre">ldap:set-config</span></code>
+(below). For example, if your search attributes are
+<code class="docutils literal"><span class="pre">givenName</span></code> and <code class="docutils literal"><span class="pre">sn</span></code> you can find users by first name + last name very
+quickly. For example, you’ll find Terri Hanson by searching for <code class="docutils literal"><span class="pre">te</span> <span class="pre">ha</span></code>.
+Trailing whitespaces are ignored.</p>
+<p>Check if an LDAP user exists. This works only if the ownCloud server is
+connected to an LDAP server:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">ldap</span><span class="p">:</span><span class="n">check</span><span class="o">-</span><span class="n">user</span> <span class="n">robert</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">ldap:check-user</span></code> will not run a check when it finds a disabled LDAP
+connection. This prevents users that exist on disabled LDAP connections from
+being marked as deleted. If you know for certain that the user you are searching for
+is not in one of the disabled connections, and exists on an active connection,
+use the <code class="docutils literal"><span class="pre">--force</span></code> option to force it to check all active LDAP connections:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">ldap</span><span class="p">:</span><span class="n">check</span><span class="o">-</span><span class="n">user</span> <span class="o">--</span><span class="n">force</span> <span class="n">robert</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">ldap:create-empty-config</span></code> creates an empty LDAP configuration. The first
+one you create has no <code class="docutils literal"><span class="pre">configID</span></code>, like this example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">ldap</span><span class="p">:</span><span class="n">create</span><span class="o">-</span><span class="n">empty</span><span class="o">-</span><span class="n">config</span>
+  <span class="n">Created</span> <span class="n">new</span> <span class="n">configuration</span> <span class="k">with</span> <span class="n">configID</span> <span class="s1">&#39;&#39;</span>
+</pre></div>
+</div>
+<p>This is a holdover from the early days, when there was no option to create
+additional configurations. The second, and all subsequent, configurations
+that you create are automatically assigned IDs:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">ldap</span><span class="p">:</span><span class="n">create</span><span class="o">-</span><span class="n">empty</span><span class="o">-</span><span class="n">config</span>
+   <span class="n">Created</span> <span class="n">new</span> <span class="n">configuration</span> <span class="k">with</span> <span class="n">configID</span> <span class="s1">&#39;s01&#39;</span>
+</pre></div>
+</div>
+<p>Then you can list and view your configurations:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">ldap</span><span class="p">:</span><span class="n">show</span><span class="o">-</span><span class="n">config</span>
+</pre></div>
+</div>
+<p>And view the configuration for a single configID:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">ldap</span><span class="p">:</span><span class="n">show</span><span class="o">-</span><span class="n">config</span> <span class="n">s01</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">ldap:delete-config</span> <span class="pre">[configID]</span></code> deletes an existing LDAP configuration:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">ldap</span><span class="p">:</span><span class="n">delete</span>  <span class="n">s01</span>
+<span class="n">Deleted</span> <span class="n">configuration</span> <span class="k">with</span> <span class="n">configID</span> <span class="s1">&#39;s01&#39;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">ldap:set-config</span></code> command is for manipulating configurations, like this
+example that sets search attributes:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">ldap</span><span class="p">:</span><span class="nb">set</span><span class="o">-</span><span class="n">config</span> <span class="n">s01</span> <span class="n">ldapAttributesForUserSearch</span>
+<span class="s2">&quot;cn;givenname;sn;displayname;mail&quot;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">ldap:test-config</span></code> tests whether your configuration is correct and can bind to
+the server:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>sudo -u www-data php occ ldap:test-config s01
+The configuration is valid and the connection could be established!
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">ldap:show-remnants</span></code> is for cleaning up the LDAP mappings table, and is
+documented in <a class="reference internal" href="../configuration_user/user_auth_ldap_cleanup.html"><span class="doc">LDAP User Cleanup</span></a>.</p>
+</div>
+<div class="section" id="logging-commands">
+<span id="logging-commands-label"></span><h2>Logging Commands<a class="headerlink" href="#logging-commands" title="Permalink to this headline">¶</a></h2>
+<p>These commands view and configure your ownCloud logging preferences:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">log</span>
+ <span class="n">log</span><span class="p">:</span><span class="n">manage</span>     <span class="n">manage</span> <span class="n">logging</span> <span class="n">configuration</span>
+ <span class="n">log</span><span class="p">:</span><span class="n">owncloud</span>   <span class="n">manipulate</span> <span class="n">ownCloud</span> <span class="n">logging</span> <span class="n">backend</span>
+</pre></div>
+</div>
+<p>Run <code class="docutils literal"><span class="pre">log:owncloud</span></code> to see your current logging status:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">log</span><span class="p">:</span><span class="n">owncloud</span>
+<span class="n">Log</span> <span class="n">backend</span> <span class="n">ownCloud</span><span class="p">:</span> <span class="n">enabled</span>
+<span class="n">Log</span> <span class="n">file</span><span class="p">:</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">owncloud</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">owncloud</span><span class="o">.</span><span class="n">log</span>
+<span class="n">Rotate</span> <span class="n">at</span><span class="p">:</span> <span class="n">disabled</span>
+</pre></div>
+</div>
+<p>Use the <code class="docutils literal"><span class="pre">--enable</span></code> option to turn on logging. Use <code class="docutils literal"><span class="pre">--file</span></code> to set a
+different log file path. Set your rotation by log file size in bytes with
+<code class="docutils literal"><span class="pre">--rotate-size</span></code>; 0 disables rotation.</p>
+<p><code class="docutils literal"><span class="pre">log:manage</span></code> sets your logging backend, log level, and timezone. The defaults
+are <code class="docutils literal"><span class="pre">owncloud</span></code>, <code class="docutils literal"><span class="pre">Warning</span></code>, and <code class="docutils literal"><span class="pre">UTC</span></code>. Available options are:</p>
+<ul class="simple">
+<li>–backend [owncloud, syslog, errorlog]</li>
+<li>–level [debug, info, warning, error]</li>
+</ul>
+</div>
+<div class="section" id="maintenance-commands">
+<span id="maintenance-commands-label"></span><h2>Maintenance Commands<a class="headerlink" href="#maintenance-commands" title="Permalink to this headline">¶</a></h2>
+<p>Use these commands when you upgrade ownCloud, manage encryption, perform
+backups and other tasks that require locking users out until you are finished:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">maintenance</span>
+ <span class="n">maintenance</span><span class="p">:</span><span class="n">mimetype</span><span class="p">:</span><span class="n">update</span><span class="o">-</span><span class="n">db</span>       <span class="n">Update</span> <span class="n">database</span> <span class="n">mimetypes</span> <span class="ow">and</span> <span class="n">update</span>
+                                      <span class="n">filecache</span>
+ <span class="n">maintenance</span><span class="p">:</span><span class="n">mimetype</span><span class="p">:</span><span class="n">update</span><span class="o">-</span><span class="n">js</span>       <span class="n">Update</span> <span class="n">mimetypelist</span><span class="o">.</span><span class="n">js</span>
+ <span class="n">maintenance</span><span class="p">:</span><span class="n">mode</span>                     <span class="nb">set</span> <span class="n">maintenance</span> <span class="n">mode</span>
+ <span class="n">maintenance</span><span class="p">:</span><span class="n">repair</span>                   <span class="n">repair</span> <span class="n">this</span> <span class="n">installation</span>
+ <span class="n">maintenance</span><span class="p">:</span><span class="n">singleuser</span>               <span class="nb">set</span> <span class="n">single</span> <span class="n">user</span> <span class="n">mode</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">maintenance:mode</span></code> locks the sessions of all logged-in users, including
+administrators, and displays a status screen warning that the server is in
+maintenance mode. Users who are not already logged in cannot log in until
+maintenance mode is turned off. When you take the server out of maintenance mode
+logged-in users must refresh their Web browsers to continue working:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">maintenance</span><span class="p">:</span><span class="n">mode</span> <span class="o">--</span><span class="n">on</span>
+<span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">maintenance</span><span class="p">:</span><span class="n">mode</span> <span class="o">--</span><span class="n">off</span>
+</pre></div>
+</div>
+<p>Putting your ownCloud server into single-user mode allows admins to log in and
+work, but not ordinary users. This is useful for performing maintenance and
+troubleshooting on a running server:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">maintenance</span><span class="p">:</span><span class="n">singleuser</span> <span class="o">--</span><span class="n">on</span>
+<span class="n">Single</span> <span class="n">user</span> <span class="n">mode</span> <span class="n">enabled</span>
+</pre></div>
+</div>
+<p>Turn it off when you’re finished:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">maintenance</span><span class="p">:</span><span class="n">singleuser</span> <span class="o">--</span><span class="n">off</span>
+<span class="n">Single</span> <span class="n">user</span> <span class="n">mode</span> <span class="n">disabled</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">maintenance:repair</span></code> command runs automatically during upgrades to clean
+up the database, so while you can run it manually there usually isn’t a need
+to:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">maintenance</span><span class="p">:</span><span class="n">repair</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">maintenance:mimetype:update-db</span></code> updates the ownCloud database and file cache
+with changed mimetypes found in <code class="docutils literal"><span class="pre">config/mimetypemapping.json</span></code>. Run this
+command after modifying <code class="docutils literal"><span class="pre">config/mimetypemapping.json</span></code>. If you change a
+mimetype, run <code class="docutils literal"><span class="pre">maintenance:mimetype:update-db</span> <span class="pre">--repair-filecache</span></code> to apply the
+change to existing files.</p>
+</div>
+<div class="section" id="security-import-ssl-certificates">
+<span id="security-commands-label"></span><h2>Security (Import SSL Certificates)<a class="headerlink" href="#security-import-ssl-certificates" title="Permalink to this headline">¶</a></h2>
+<p>Use these commands to manage server-wide SSL certificates. These are useful when you create federation shares with other ownCloud servers that use self-signed certificates:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">security</span>
+ <span class="n">security</span><span class="p">:</span><span class="n">certificates</span>         <span class="nb">list</span> <span class="n">trusted</span> <span class="n">certificates</span>
+ <span class="n">security</span><span class="p">:</span><span class="n">certificates</span><span class="p">:</span><span class="kn">import</span>  <span class="nn">import</span> <span class="n">trusted</span> <span class="n">certificate</span>
+ <span class="n">security</span><span class="p">:</span><span class="n">certificates</span><span class="p">:</span><span class="n">remove</span>  <span class="n">remove</span> <span class="n">trusted</span> <span class="n">certificate</span>
+</pre></div>
+</div>
+<p>This example lists your installed certificates:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">security</span><span class="p">:</span><span class="n">certificates</span>
+</pre></div>
+</div>
+<p>Import a new certificate:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">security</span><span class="p">:</span><span class="kn">import</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">certificate</span>
+</pre></div>
+</div>
+<p>Remove a certificate:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">security</span><span class="p">:</span><span class="n">remove</span> <span class="p">[</span><span class="n">certificate</span> <span class="n">name</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="shibboleth-modes-enterprise-edition-only">
+<span id="shibboleth-label"></span><h2>Shibboleth Modes (Enterprise Edition only)<a class="headerlink" href="#shibboleth-modes-enterprise-edition-only" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This command is only available when the “Shibboleth user backend” app
+(<code class="docutils literal"><span class="pre">user_shibboleth</span></code>) is enabled.</p>
+</div>
+<p><code class="docutils literal"><span class="pre">shibboleth:mode</span></code> sets your Shibboleth mode to <code class="docutils literal"><span class="pre">notactive</span></code>,
+<code class="docutils literal"><span class="pre">autoprovision</span></code>, or <code class="docutils literal"><span class="pre">ssoonly</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">shibboleth</span><span class="p">:</span><span class="n">mode</span> <span class="p">[</span><span class="n">mode</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="trashbin">
+<span id="trashbin-label"></span><h2>Trashbin<a class="headerlink" href="#trashbin" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This command is only available when the “Deleted files” app
+(<code class="docutils literal"><span class="pre">files_trashbin</span></code>) is enabled.</p>
+</div>
+<p>The <code class="docutils literal"><span class="pre">trashbin:cleanup</span></code> command removes the deleted files of the specified
+users in a space-delimited list, or all users if none are specified.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">trashbin</span>
+ <span class="n">trashbin</span><span class="p">:</span><span class="n">cleanup</span>   <span class="n">Remove</span> <span class="n">deleted</span> <span class="n">files</span>
+</pre></div>
+</div>
+<p>This example removes the deleted files of all users:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">trashbin</span><span class="p">:</span><span class="n">cleanup</span>
+<span class="n">Remove</span> <span class="nb">all</span> <span class="n">deleted</span> <span class="n">files</span>
+<span class="n">Remove</span> <span class="n">deleted</span> <span class="n">files</span> <span class="k">for</span> <span class="n">users</span> <span class="n">on</span> <span class="n">backend</span> <span class="n">Database</span>
+ <span class="n">freda</span>
+ <span class="n">molly</span>
+ <span class="n">stash</span>
+ <span class="n">rosa</span>
+ <span class="n">edward</span>
+</pre></div>
+</div>
+<p>This example removes the deleted files of users molly and freda:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">trashbin</span><span class="p">:</span><span class="n">cleanup</span> <span class="n">molly</span> <span class="n">freda</span>
+<span class="n">Remove</span> <span class="n">deleted</span> <span class="n">files</span> <span class="n">of</span>   <span class="n">molly</span>
+<span class="n">Remove</span> <span class="n">deleted</span> <span class="n">files</span> <span class="n">of</span>   <span class="n">freda</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="user-commands">
+<span id="user-commands-label"></span><h2>User Commands<a class="headerlink" href="#user-commands" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">user</span></code> commands create and remove users, reset passwords, display a simple
+report showing how many users you have, and when a user was last logged in:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">user</span>
+ <span class="n">user</span><span class="p">:</span><span class="n">add</span>            <span class="n">adds</span> <span class="n">a</span> <span class="n">user</span>
+ <span class="n">user</span><span class="p">:</span><span class="n">delete</span>         <span class="n">deletes</span> <span class="n">the</span> <span class="n">specified</span> <span class="n">user</span>
+ <span class="n">user</span><span class="p">:</span><span class="n">lastseen</span>       <span class="n">shows</span> <span class="n">when</span> <span class="n">the</span> <span class="n">user</span> <span class="n">was</span> <span class="n">logged</span> <span class="n">it</span> <span class="n">last</span>
+                     <span class="n">time</span>
+ <span class="n">user</span><span class="p">:</span><span class="n">report</span>         <span class="n">shows</span> <span class="n">how</span> <span class="n">many</span> <span class="n">users</span> <span class="n">have</span> <span class="n">access</span>
+ <span class="n">user</span><span class="p">:</span><span class="n">resetpassword</span>  <span class="n">Resets</span> <span class="n">the</span> <span class="n">password</span> <span class="n">of</span> <span class="n">the</span> <span class="n">named</span> <span class="n">user</span>
+</pre></div>
+</div>
+<p>You can create a new user with their display name, login name, and any group
+memberships with the <code class="docutils literal"><span class="pre">user:add</span></code> command. The syntax is:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">user</span><span class="p">:</span><span class="n">add</span> <span class="p">[</span><span class="o">--</span><span class="n">password</span><span class="o">-</span><span class="n">from</span><span class="o">-</span><span class="n">env</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="p">[</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">]]</span> <span class="p">[</span><span class="o">-</span><span class="n">g</span><span class="o">|--</span><span class="n">group</span><span class="p">[</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">]]</span>
+<span class="n">uid</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">display-name</span></code> corresponds to the <strong>Full Name</strong> on the Users page in your
+ownCloud Web UI, and the <code class="docutils literal"><span class="pre">uid</span></code> is their <strong>Username</strong>, which is their
+login name. This example adds new user Layla Smith, and adds her to the
+<strong>users</strong> and <strong>db-admins</strong> groups. Any groups that do not exist are created:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">user</span><span class="p">:</span><span class="n">add</span> <span class="o">--</span><span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Layla Smith&quot;</span>
+  <span class="o">--</span><span class="n">group</span><span class="o">=</span><span class="s2">&quot;users&quot;</span> <span class="o">--</span><span class="n">group</span><span class="o">=</span><span class="s2">&quot;db-admins&quot;</span> <span class="n">layla</span>
+  <span class="n">Enter</span> <span class="n">password</span><span class="p">:</span>
+  <span class="n">Confirm</span> <span class="n">password</span><span class="p">:</span>
+  <span class="n">The</span> <span class="n">user</span> <span class="s2">&quot;layla&quot;</span> <span class="n">was</span> <span class="n">created</span> <span class="n">successfully</span>
+  <span class="n">Display</span> <span class="n">name</span> <span class="nb">set</span> <span class="n">to</span> <span class="s2">&quot;Layla Smith&quot;</span>
+  <span class="n">User</span> <span class="s2">&quot;layla&quot;</span> <span class="n">added</span> <span class="n">to</span> <span class="n">group</span> <span class="s2">&quot;users&quot;</span>
+  <span class="n">User</span> <span class="s2">&quot;layla&quot;</span> <span class="n">added</span> <span class="n">to</span> <span class="n">group</span> <span class="s2">&quot;db-admins&quot;</span>
+</pre></div>
+</div>
+<p>Go to your Users page, and you will see your new user.</p>
+<p><code class="docutils literal"><span class="pre">password-from-env</span></code> allows you to set the user’s password from an environment
+variable. This prevents the password from being exposed to all users via the
+process list, and will only be visible in the history of the user (root)
+running the command. This also permits creating scripts for adding multiple new
+users.</p>
+<p>To use <code class="docutils literal"><span class="pre">password-from-env</span></code> you must run as “real” root, rather than <code class="docutils literal"><span class="pre">sudo</span></code>,
+because <code class="docutils literal"><span class="pre">sudo</span></code> strips environment variables. This example adds new user Fred
+Jones:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">OC_PASS</span><span class="o">=</span><span class="n">newpassword</span>
+<span class="n">su</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;php occ user:add --password-from-env</span>
+  <span class="o">--</span><span class="n">display</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Fred Jones&quot;</span> <span class="o">--</span><span class="n">group</span><span class="o">=</span><span class="s2">&quot;users&quot;</span> <span class="n">fred</span><span class="s1">&#39;</span>
+<span class="n">The</span> <span class="n">user</span> <span class="s2">&quot;fred&quot;</span> <span class="n">was</span> <span class="n">created</span> <span class="n">successfully</span>
+<span class="n">Display</span> <span class="n">name</span> <span class="nb">set</span> <span class="n">to</span> <span class="s2">&quot;Fred Jones&quot;</span>
+<span class="n">User</span> <span class="s2">&quot;fred&quot;</span> <span class="n">added</span> <span class="n">to</span> <span class="n">group</span> <span class="s2">&quot;users&quot;</span>
+</pre></div>
+</div>
+<p>You can reset any user’s password, including administrators (see
+<a class="reference internal" href="../configuration_user/reset_admin_password.html"><span class="doc">Resetting a Lost Admin Password</span></a>):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">user</span><span class="p">:</span><span class="n">resetpassword</span> <span class="n">layla</span>
+  <span class="n">Enter</span> <span class="n">a</span> <span class="n">new</span> <span class="n">password</span><span class="p">:</span>
+  <span class="n">Confirm</span> <span class="n">the</span> <span class="n">new</span> <span class="n">password</span><span class="p">:</span>
+  <span class="n">Successfully</span> <span class="n">reset</span> <span class="n">password</span> <span class="k">for</span> <span class="n">layla</span>
+</pre></div>
+</div>
+<p>You may also use <code class="docutils literal"><span class="pre">password-from-env</span></code> to reset passwords:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">OC_PASS</span><span class="o">=</span><span class="n">newpassword</span>
+<span class="n">su</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="o">-</span><span class="n">c</span> <span class="s1">&#39;php occ user:resetpassword --password-from-env</span>
+  <span class="n">layla</span><span class="s1">&#39;</span>
+  <span class="n">Successfully</span> <span class="n">reset</span> <span class="n">password</span> <span class="k">for</span> <span class="n">layla</span>
+</pre></div>
+</div>
+<p>You can delete users:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">user</span><span class="p">:</span><span class="n">delete</span> <span class="n">fred</span>
+</pre></div>
+</div>
+<p>View a user’s most recent login:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">user</span><span class="p">:</span><span class="n">lastseen</span> <span class="n">layla</span>
+  <span class="n">layla</span><span class="s1">&#39;s last login: 09.01.2015 18:46</span>
+</pre></div>
+</div>
+<p>Generate a simple report that counts all users, including users on external user
+authentication servers such as LDAP:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">user</span><span class="p">:</span><span class="n">report</span>
+<span class="o">+------------------+----+</span>
+<span class="o">|</span> <span class="n">User</span> <span class="n">Report</span>      <span class="o">|</span>    <span class="o">|</span>
+<span class="o">+------------------+----+</span>
+<span class="o">|</span> <span class="n">Database</span>         <span class="o">|</span> <span class="mi">12</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">LDAP</span>             <span class="o">|</span> <span class="mi">86</span> <span class="o">|</span>
+<span class="o">|</span>                  <span class="o">|</span>    <span class="o">|</span>
+<span class="o">|</span> <span class="n">total</span> <span class="n">users</span>      <span class="o">|</span> <span class="mi">98</span> <span class="o">|</span>
+<span class="o">|</span>                  <span class="o">|</span>    <span class="o">|</span>
+<span class="o">|</span> <span class="n">user</span> <span class="n">directories</span> <span class="o">|</span> <span class="mi">2</span>  <span class="o">|</span>
+<span class="o">+------------------+----+</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="versions">
+<span id="versions-label"></span><h2>Versions<a class="headerlink" href="#versions" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This command is only available when the “Versions” app (<code class="docutils literal"><span class="pre">files_versions</span></code>) is
+enabled.</p>
+</div>
+<p>Use this command to delete file versions for specific users, or for all users
+when none are specified:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">versions</span>
+ <span class="n">versions</span><span class="p">:</span><span class="n">cleanup</span>   <span class="n">Delete</span> <span class="n">versions</span>
+</pre></div>
+</div>
+<p>This example deletes all versions for all users:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">versions</span><span class="p">:</span><span class="n">cleanup</span>
+<span class="n">Delete</span> <span class="nb">all</span> <span class="n">versions</span>
+<span class="n">Delete</span> <span class="n">versions</span> <span class="k">for</span> <span class="n">users</span> <span class="n">on</span> <span class="n">backend</span> <span class="n">Database</span>
+  <span class="n">freda</span>
+  <span class="n">molly</span>
+  <span class="n">stash</span>
+  <span class="n">rosa</span>
+  <span class="n">edward</span>
+</pre></div>
+</div>
+<p>You can delete versions for specific users in a space-delimited list:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">versions</span><span class="p">:</span><span class="n">cleanup</span>
+<span class="n">Delete</span> <span class="n">versions</span> <span class="n">of</span>   <span class="n">freda</span>
+<span class="n">Delete</span> <span class="n">versions</span> <span class="n">of</span>   <span class="n">molly</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="command-line-installation">
+<span id="command-line-installation-label"></span><h2>Command Line Installation<a class="headerlink" href="#command-line-installation" title="Permalink to this headline">¶</a></h2>
+<p>These commands are available only after you have downloaded and unpacked the
+ownCloud archive, and taken no further installation steps.</p>
+<p>You can install ownCloud entirely from the command line. After downloading the
+tarball and copying ownCloud into the appropriate directories, or
+after installing ownCloud packages (See
+<a class="reference internal" href="../installation/linux_installation.html"><span class="doc">Preferred Linux Installation Method</span></a> and
+<a class="reference internal" href="../installation/source_installation.html"><span class="doc">Manual Installation on Linux</span></a>) you can use <code class="docutils literal"><span class="pre">occ</span></code> commands in
+place of running the graphical Installation Wizard.</p>
+<p>Apply correct permissions to your ownCloud directories; see
+<a class="reference internal" href="../installation/installation_wizard.html#strong-perms-label"><span class="std std-ref">Setting Strong Directory Permissions</span></a>. Then choose your <code class="docutils literal"><span class="pre">occ</span></code> options. This lists your
+available options:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">owncloud</span><span class="o">/</span><span class="n">occ</span>
+<span class="n">ownCloud</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">installed</span> <span class="o">-</span> <span class="n">only</span> <span class="n">a</span> <span class="n">limited</span> <span class="n">number</span> <span class="n">of</span> <span class="n">commands</span> <span class="n">are</span> <span class="n">available</span>
+<span class="n">ownCloud</span> <span class="n">version</span> <span class="mf">9.0</span><span class="o">.</span><span class="mi">0</span>
+
+<span class="n">Usage</span><span class="p">:</span>
+ <span class="p">[</span><span class="n">options</span><span class="p">]</span> <span class="n">command</span> <span class="p">[</span><span class="n">arguments</span><span class="p">]</span>
+
+<span class="n">Options</span><span class="p">:</span>
+ <span class="o">--</span><span class="n">help</span> <span class="p">(</span><span class="o">-</span><span class="n">h</span><span class="p">)</span>           <span class="n">Display</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span>
+ <span class="o">--</span><span class="n">quiet</span> <span class="p">(</span><span class="o">-</span><span class="n">q</span><span class="p">)</span>          <span class="n">Do</span> <span class="ow">not</span> <span class="n">output</span> <span class="nb">any</span> <span class="n">message</span>
+ <span class="o">--</span><span class="n">verbose</span> <span class="p">(</span><span class="o">-</span><span class="n">v</span><span class="o">|</span><span class="n">vv</span><span class="o">|</span><span class="n">vvv</span><span class="p">)</span> <span class="n">Increase</span> <span class="n">the</span> <span class="n">verbosity</span> <span class="n">of</span> <span class="n">messages</span><span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">normal</span>
+ <span class="n">output</span><span class="p">,</span>  <span class="mi">2</span> <span class="k">for</span> <span class="n">more</span> <span class="n">verbose</span> <span class="n">output</span> <span class="ow">and</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">debug</span>
+ <span class="o">--</span><span class="n">version</span> <span class="p">(</span><span class="o">-</span><span class="n">V</span><span class="p">)</span>        <span class="n">Display</span> <span class="n">this</span> <span class="n">application</span> <span class="n">version</span>
+ <span class="o">--</span><span class="n">ansi</span>                <span class="n">Force</span> <span class="n">ANSI</span> <span class="n">output</span>
+ <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">ansi</span>             <span class="n">Disable</span> <span class="n">ANSI</span> <span class="n">output</span>
+ <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">interaction</span> <span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="p">)</span> <span class="n">Do</span> <span class="ow">not</span> <span class="n">ask</span> <span class="nb">any</span> <span class="n">interactive</span> <span class="n">question</span>
+
+<span class="n">Available</span> <span class="n">commands</span><span class="p">:</span>
+ <span class="n">check</span>                 <span class="n">check</span> <span class="n">dependencies</span> <span class="n">of</span> <span class="n">the</span> <span class="n">server</span> <span class="n">environment</span>
+ <span class="n">help</span>                  <span class="n">Displays</span> <span class="n">help</span> <span class="k">for</span> <span class="n">a</span> <span class="n">command</span>
+ <span class="nb">list</span>                  <span class="n">Lists</span> <span class="n">commands</span>
+ <span class="n">status</span>                <span class="n">show</span> <span class="n">some</span> <span class="n">status</span> <span class="n">information</span>
+ <span class="n">app</span>
+ <span class="n">app</span><span class="p">:</span><span class="n">check</span><span class="o">-</span><span class="n">code</span>        <span class="n">check</span> <span class="n">code</span> <span class="n">to</span> <span class="n">be</span> <span class="n">compliant</span>
+ <span class="n">l10n</span>
+ <span class="n">l10n</span><span class="p">:</span><span class="n">createjs</span>         <span class="n">Create</span> <span class="n">javascript</span> <span class="n">translation</span> <span class="n">files</span> <span class="k">for</span> <span class="n">a</span> <span class="n">given</span> <span class="n">app</span>
+ <span class="n">maintenance</span>
+ <span class="n">maintenance</span><span class="p">:</span><span class="n">install</span>   <span class="n">install</span> <span class="n">ownCloud</span>
+</pre></div>
+</div>
+<p>Display your <code class="docutils literal"><span class="pre">maintenance:install</span></code> options:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">help</span> <span class="n">maintenance</span><span class="p">:</span><span class="n">install</span>
+<span class="n">ownCloud</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">installed</span> <span class="o">-</span> <span class="n">only</span> <span class="n">a</span> <span class="n">limited</span> <span class="n">number</span> <span class="n">of</span> <span class="n">commands</span> <span class="n">are</span> <span class="n">available</span>
+<span class="n">Usage</span><span class="p">:</span>
+ <span class="n">maintenance</span><span class="p">:</span><span class="n">install</span> <span class="p">[</span><span class="o">--</span><span class="n">database</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">database</span><span class="o">-</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">]</span>
+<span class="p">[</span><span class="o">--</span><span class="n">database</span><span class="o">-</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">database</span><span class="o">-</span><span class="n">user</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">database</span><span class="o">-</span><span class="k">pass</span><span class="p">[</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">]]</span>
+<span class="p">[</span><span class="o">--</span><span class="n">database</span><span class="o">-</span><span class="n">table</span><span class="o">-</span><span class="n">prefix</span><span class="p">[</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">]]</span> <span class="p">[</span><span class="o">--</span><span class="n">admin</span><span class="o">-</span><span class="n">user</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">admin</span><span class="o">-</span><span class="k">pass</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">]</span>
+<span class="p">[</span><span class="o">--</span><span class="n">data</span><span class="o">-</span><span class="nb">dir</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">]</span>
+
+<span class="n">Options</span><span class="p">:</span>
+ <span class="o">--</span><span class="n">database</span>               <span class="n">Supported</span> <span class="n">database</span> <span class="nb">type</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="s2">&quot;sqlite&quot;</span><span class="p">)</span>
+ <span class="o">--</span><span class="n">database</span><span class="o">-</span><span class="n">name</span>          <span class="n">Name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">database</span>
+ <span class="o">--</span><span class="n">database</span><span class="o">-</span><span class="n">host</span>          <span class="n">Hostname</span> <span class="n">of</span> <span class="n">the</span> <span class="n">database</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">)</span>
+ <span class="o">--</span><span class="n">database</span><span class="o">-</span><span class="n">user</span>          <span class="n">User</span> <span class="n">name</span> <span class="n">to</span> <span class="n">connect</span> <span class="n">to</span> <span class="n">the</span> <span class="n">database</span>
+ <span class="o">--</span><span class="n">database</span><span class="o">-</span><span class="k">pass</span>          <span class="n">Password</span> <span class="n">of</span> <span class="n">the</span> <span class="n">database</span> <span class="n">user</span>
+ <span class="o">--</span><span class="n">database</span><span class="o">-</span><span class="n">table</span><span class="o">-</span><span class="n">prefix</span>  <span class="n">Prefix</span> <span class="k">for</span> <span class="nb">all</span> <span class="n">tables</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="n">oc_</span><span class="p">)</span>
+ <span class="o">--</span><span class="n">admin</span><span class="o">-</span><span class="n">user</span>             <span class="n">User</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">admin</span> <span class="n">account</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+ <span class="o">--</span><span class="n">admin</span><span class="o">-</span><span class="k">pass</span>             <span class="n">Password</span> <span class="n">of</span> <span class="n">the</span> <span class="n">admin</span> <span class="n">account</span>
+ <span class="o">--</span><span class="n">data</span><span class="o">-</span><span class="nb">dir</span>               <span class="n">Path</span> <span class="n">to</span> <span class="n">data</span> <span class="n">directory</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span>
+                          <span class="s2">&quot;/var/www/owncloud/data&quot;</span><span class="p">)</span>
+ <span class="o">--</span><span class="n">help</span> <span class="p">(</span><span class="o">-</span><span class="n">h</span><span class="p">)</span>              <span class="n">Display</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span>
+ <span class="o">--</span><span class="n">quiet</span> <span class="p">(</span><span class="o">-</span><span class="n">q</span><span class="p">)</span>             <span class="n">Do</span> <span class="ow">not</span> <span class="n">output</span> <span class="nb">any</span> <span class="n">message</span>
+ <span class="o">--</span><span class="n">verbose</span> <span class="p">(</span><span class="o">-</span><span class="n">v</span><span class="o">|</span><span class="n">vv</span><span class="o">|</span><span class="n">vvv</span><span class="p">)</span>    <span class="n">Increase</span> <span class="n">the</span> <span class="n">verbosity</span> <span class="n">of</span> <span class="n">messages</span><span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">normal</span>
+  <span class="n">output</span><span class="p">,</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">more</span> <span class="n">verbose</span> <span class="n">output</span> <span class="ow">and</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">debug</span>
+ <span class="o">--</span><span class="n">version</span> <span class="p">(</span><span class="o">-</span><span class="n">V</span><span class="p">)</span>           <span class="n">Display</span> <span class="n">this</span> <span class="n">application</span> <span class="n">version</span>
+ <span class="o">--</span><span class="n">ansi</span>                   <span class="n">Force</span> <span class="n">ANSI</span> <span class="n">output</span>
+ <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">ansi</span>                <span class="n">Disable</span> <span class="n">ANSI</span> <span class="n">output</span>
+ <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">interaction</span> <span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="p">)</span>    <span class="n">Do</span> <span class="ow">not</span> <span class="n">ask</span> <span class="nb">any</span> <span class="n">interactive</span> <span class="n">question</span>
+</pre></div>
+</div>
+<p>This example completes the installation:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">owncloud</span><span class="o">/</span>
+<span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">maintenance</span><span class="p">:</span><span class="n">install</span> <span class="o">--</span><span class="n">database</span>
+<span class="s2">&quot;mysql&quot;</span> <span class="o">--</span><span class="n">database</span><span class="o">-</span><span class="n">name</span> <span class="s2">&quot;owncloud&quot;</span>  <span class="o">--</span><span class="n">database</span><span class="o">-</span><span class="n">user</span> <span class="s2">&quot;root&quot;</span> <span class="o">--</span><span class="n">database</span><span class="o">-</span><span class="k">pass</span>
+<span class="s2">&quot;password&quot;</span> <span class="o">--</span><span class="n">admin</span><span class="o">-</span><span class="n">user</span> <span class="s2">&quot;admin&quot;</span> <span class="o">--</span><span class="n">admin</span><span class="o">-</span><span class="k">pass</span> <span class="s2">&quot;password&quot;</span>
+<span class="n">ownCloud</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">installed</span> <span class="o">-</span> <span class="n">only</span> <span class="n">a</span> <span class="n">limited</span> <span class="n">number</span> <span class="n">of</span> <span class="n">commands</span> <span class="n">are</span> <span class="n">available</span>
+<span class="n">ownCloud</span> <span class="n">was</span> <span class="n">successfully</span> <span class="n">installed</span>
+</pre></div>
+</div>
+<p>Supported databases are:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">sqlite</span> <span class="p">(</span><span class="n">SQLite3</span> <span class="o">-</span> <span class="n">ownCloud</span> <span class="n">Community</span> <span class="n">edition</span> <span class="n">only</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">mysql</span> <span class="p">(</span><span class="n">MySQL</span><span class="o">/</span><span class="n">MariaDB</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">pgsql</span> <span class="p">(</span><span class="n">PostgreSQL</span><span class="p">)</span>
+<span class="o">-</span> <span class="n">oci</span> <span class="p">(</span><span class="n">Oracle</span> <span class="o">-</span> <span class="n">ownCloud</span> <span class="n">Enterprise</span> <span class="n">edition</span> <span class="n">only</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="command-line-upgrade">
+<span id="command-line-upgrade-label"></span><h2>Command Line Upgrade<a class="headerlink" href="#command-line-upgrade" title="Permalink to this headline">¶</a></h2>
+<p>These commands are available only after you have downloaded upgraded packages or
+tar archives, and before you complete the upgrade.</p>
+<p>List all options, like this example on CentOS Linux:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">apache</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">upgrade</span> <span class="o">-</span><span class="n">h</span>
+<span class="n">Usage</span><span class="p">:</span>
+<span class="n">upgrade</span> <span class="p">[</span><span class="o">--</span><span class="n">skip</span><span class="o">-</span><span class="n">migration</span><span class="o">-</span><span class="n">test</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">dry</span><span class="o">-</span><span class="n">run</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">app</span><span class="o">-</span><span class="n">disable</span><span class="p">]</span>
+
+<span class="n">Options</span><span class="p">:</span>
+<span class="o">--</span><span class="n">skip</span><span class="o">-</span><span class="n">migration</span><span class="o">-</span><span class="n">test</span>  <span class="n">skips</span> <span class="n">the</span> <span class="n">database</span> <span class="n">schema</span> <span class="n">migration</span> <span class="n">simulation</span> <span class="ow">and</span>
+   <span class="n">update</span> <span class="n">directly</span>
+<span class="o">--</span><span class="n">dry</span><span class="o">-</span><span class="n">run</span>              <span class="n">only</span> <span class="n">runs</span> <span class="n">the</span> <span class="n">database</span> <span class="n">schema</span> <span class="n">migration</span> <span class="n">simulation</span><span class="p">,</span> <span class="n">do</span>
+  <span class="ow">not</span> <span class="n">actually</span> <span class="n">update</span>
+<span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">app</span><span class="o">-</span><span class="n">disable</span>       <span class="n">skips</span> <span class="n">the</span> <span class="n">disable</span> <span class="n">of</span> <span class="n">third</span> <span class="n">party</span> <span class="n">apps</span>
+<span class="o">--</span><span class="n">help</span> <span class="p">(</span><span class="o">-</span><span class="n">h</span><span class="p">)</span>            <span class="n">Display</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span><span class="o">.</span>
+<span class="o">--</span><span class="n">quiet</span> <span class="p">(</span><span class="o">-</span><span class="n">q</span><span class="p">)</span>           <span class="n">Do</span> <span class="ow">not</span> <span class="n">output</span> <span class="nb">any</span> <span class="n">message</span><span class="o">.</span>
+<span class="o">--</span><span class="n">verbose</span> <span class="p">(</span><span class="o">-</span><span class="n">v</span><span class="o">|</span><span class="n">vv</span><span class="o">|</span><span class="n">vvv</span><span class="p">)</span>  <span class="n">Increase</span> <span class="n">the</span> <span class="n">verbosity</span> <span class="n">of</span> <span class="n">messages</span><span class="p">:</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">normal</span> <span class="n">output</span><span class="p">,</span>
+  <span class="mi">2</span> <span class="k">for</span> <span class="n">more</span> <span class="n">verbose</span> <span class="n">output</span> <span class="ow">and</span> <span class="mi">3</span> <span class="k">for</span> <span class="n">debug</span><span class="o">.</span>
+<span class="o">--</span><span class="n">version</span> <span class="p">(</span><span class="o">-</span><span class="n">V</span><span class="p">)</span>         <span class="n">Display</span> <span class="n">this</span> <span class="n">application</span> <span class="n">version</span><span class="o">.</span>
+<span class="o">--</span><span class="n">ansi</span>                 <span class="n">Force</span> <span class="n">ANSI</span> <span class="n">output</span><span class="o">.</span>
+<span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">ansi</span>              <span class="n">Disable</span> <span class="n">ANSI</span> <span class="n">output</span><span class="o">.</span>
+<span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">interaction</span> <span class="p">(</span><span class="o">-</span><span class="n">n</span><span class="p">)</span>  <span class="n">Do</span> <span class="ow">not</span> <span class="n">ask</span> <span class="nb">any</span> <span class="n">interactive</span> <span class="n">question</span>
+</pre></div>
+</div>
+<p>When you are performing an update or upgrade on your ownCloud server (see the
+Maintenance section of this manual), it is better to use <code class="docutils literal"><span class="pre">occ</span></code> to perform the
+database upgrade step, rather than the Web GUI, in order to avoid timeouts. PHP
+scripts invoked from the Web interface are limited to 3600 seconds. In larger
+environments this may not be enough, leaving the system in an inconsistent
+state. After performing all the preliminary steps (see
+<a class="reference internal" href="../maintenance/upgrade.html"><span class="doc">How to Upgrade Your ownCloud Server</span></a>) use this command to upgrade your databases,
+like this example on CentOS Linux. Note how it details the steps:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">upgrade</span>
+<span class="n">ownCloud</span> <span class="ow">or</span> <span class="n">one</span> <span class="n">of</span> <span class="n">the</span> <span class="n">apps</span> <span class="n">require</span> <span class="n">upgrade</span> <span class="o">-</span> <span class="n">only</span> <span class="n">a</span> <span class="n">limited</span> <span class="n">number</span> <span class="n">of</span>
+<span class="n">commands</span> <span class="n">are</span> <span class="n">available</span>
+<span class="n">Turned</span> <span class="n">on</span> <span class="n">maintenance</span> <span class="n">mode</span>
+<span class="n">Checked</span> <span class="n">database</span> <span class="n">schema</span> <span class="n">update</span>
+<span class="n">Checked</span> <span class="n">database</span> <span class="n">schema</span> <span class="n">update</span> <span class="k">for</span> <span class="n">apps</span>
+<span class="n">Updated</span> <span class="n">database</span>
+<span class="n">Updating</span> <span class="o">&lt;</span><span class="n">gallery</span><span class="o">&gt;</span> <span class="o">...</span>
+<span class="n">Updated</span> <span class="o">&lt;</span><span class="n">gallery</span><span class="o">&gt;</span> <span class="n">to</span> <span class="mf">0.6</span><span class="o">.</span><span class="mi">1</span>
+<span class="n">Updating</span> <span class="o">&lt;</span><span class="n">activity</span><span class="o">&gt;</span> <span class="o">...</span>
+<span class="n">Updated</span> <span class="o">&lt;</span><span class="n">activity</span><span class="o">&gt;</span> <span class="n">to</span> <span class="mf">2.1</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">Update</span> <span class="n">successful</span>
+<span class="n">Turned</span> <span class="n">off</span> <span class="n">maintenance</span> <span class="n">mode</span>
+</pre></div>
+</div>
+<p>Enabling verbosity displays timestamps:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">upgrade</span> <span class="o">-</span><span class="n">v</span>
+<span class="n">ownCloud</span> <span class="ow">or</span> <span class="n">one</span> <span class="n">of</span> <span class="n">the</span> <span class="n">apps</span> <span class="n">require</span> <span class="n">upgrade</span> <span class="o">-</span> <span class="n">only</span> <span class="n">a</span> <span class="n">limited</span> <span class="n">number</span> <span class="n">of</span> <span class="n">commands</span> <span class="n">are</span> <span class="n">available</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">23</span><span class="n">T09</span><span class="p">:</span><span class="mi">06</span><span class="p">:</span><span class="mi">15</span><span class="o">+</span><span class="mi">0000</span> <span class="n">Turned</span> <span class="n">on</span> <span class="n">maintenance</span> <span class="n">mode</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">23</span><span class="n">T09</span><span class="p">:</span><span class="mi">06</span><span class="p">:</span><span class="mi">15</span><span class="o">+</span><span class="mi">0000</span> <span class="n">Checked</span> <span class="n">database</span> <span class="n">schema</span> <span class="n">update</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">23</span><span class="n">T09</span><span class="p">:</span><span class="mi">06</span><span class="p">:</span><span class="mi">15</span><span class="o">+</span><span class="mi">0000</span> <span class="n">Checked</span> <span class="n">database</span> <span class="n">schema</span> <span class="n">update</span> <span class="k">for</span> <span class="n">apps</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">23</span><span class="n">T09</span><span class="p">:</span><span class="mi">06</span><span class="p">:</span><span class="mi">15</span><span class="o">+</span><span class="mi">0000</span> <span class="n">Updated</span> <span class="n">database</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">23</span><span class="n">T09</span><span class="p">:</span><span class="mi">06</span><span class="p">:</span><span class="mi">15</span><span class="o">+</span><span class="mi">0000</span> <span class="n">Updated</span> <span class="o">&lt;</span><span class="n">files_sharing</span><span class="o">&gt;</span> <span class="n">to</span> <span class="mf">0.6</span><span class="o">.</span><span class="mi">6</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">23</span><span class="n">T09</span><span class="p">:</span><span class="mi">06</span><span class="p">:</span><span class="mi">15</span><span class="o">+</span><span class="mi">0000</span> <span class="n">Update</span> <span class="n">successful</span>
+<span class="mi">2015</span><span class="o">-</span><span class="mi">06</span><span class="o">-</span><span class="mi">23</span><span class="n">T09</span><span class="p">:</span><span class="mi">06</span><span class="p">:</span><span class="mi">15</span><span class="o">+</span><span class="mi">0000</span> <span class="n">Turned</span> <span class="n">off</span> <span class="n">maintenance</span> <span class="n">mode</span>
+</pre></div>
+</div>
+<p>If there is an error it throws an exception, and the error is detailed in your
+ownCloud logfile, so you can use the log output to figure out what went wrong,
+or to use in a bug report:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Turned</span> <span class="n">on</span> <span class="n">maintenance</span> <span class="n">mode</span>
+<span class="n">Checked</span> <span class="n">database</span> <span class="n">schema</span> <span class="n">update</span>
+<span class="n">Checked</span> <span class="n">database</span> <span class="n">schema</span> <span class="n">update</span> <span class="k">for</span> <span class="n">apps</span>
+<span class="n">Updated</span> <span class="n">database</span>
+<span class="n">Updating</span> <span class="o">&lt;</span><span class="n">files_sharing</span><span class="o">&gt;</span> <span class="o">...</span>
+<span class="ne">Exception</span>
+<span class="n">ServerNotAvailableException</span><span class="p">:</span> <span class="n">LDAP</span> <span class="n">server</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">available</span>
+<span class="n">Update</span> <span class="n">failed</span>
+<span class="n">Turned</span> <span class="n">off</span> <span class="n">maintenance</span> <span class="n">mode</span>
+</pre></div>
+</div>
+<p>Before completing the upgrade, ownCloud first runs a simulation by copying all
+database tables to new tables, and then performs the upgrade on them, to ensure
+that the upgrade will complete correctly. The copied tables are deleted after
+the upgrade. This takes twice as much time, which on large installations can be
+many hours, so you can omit this step with the <code class="docutils literal"><span class="pre">--skip-migration-test</span></code>
+option:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">upgrade</span> <span class="o">--</span><span class="n">skip</span><span class="o">-</span><span class="n">migration</span><span class="o">-</span><span class="n">test</span>
+</pre></div>
+</div>
+<p>You can perform this simulation manually with the <code class="docutils literal"><span class="pre">--dry-run</span></code> option:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">-</span><span class="n">u</span> <span class="n">www</span><span class="o">-</span><span class="n">data</span> <span class="n">php</span> <span class="n">occ</span> <span class="n">upgrade</span> <span class="o">--</span><span class="n">dry</span><span class="o">-</span><span class="n">run</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+            
+<ul class="prevnext-title list-unstyled list-inline">
+  <li class="prev">
+    <a href="import_ssl_cert.html" title="Previous Chapter: Importing System-wide and Personal SSL Certificates"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm">&laquo; Importing Sys...</span>
+    </a>
+  </li>
+  <li class="next">
+    <a href="activity_configuration.html" title="Next Chapter: Configuring the Activity App"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm">Configuring t... &raquo;</span>
+    </a>
+  </li>
+</ul>
+					</div>
+				</div>
+			</div>
+  </main>  
+  </div>
+</div>
+  </body>
+</html>
